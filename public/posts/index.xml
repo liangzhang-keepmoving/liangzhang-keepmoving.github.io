@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Liang Zhang</title>
-    <link>https://your-github-username.github.io/posts/</link>
+    <link>https://liangzhang-keepmoving.github.io/posts/</link>
     <description>Recent content in Posts on Liang Zhang</description>
     <generator>Hugo -- 0.148.1</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 May 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://your-github-username.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://liangzhang-keepmoving.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>👋 Welcome to My Blog</title>
-      <link>https://your-github-username.github.io/posts/welcome/</link>
+      <link>https://liangzhang-keepmoving.github.io/posts/welcome/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://your-github-username.github.io/posts/welcome/</guid>
+      <guid>https://liangzhang-keepmoving.github.io/posts/welcome/</guid>
       <description>&lt;p&gt;Here, I will share my research, notes, and thoughts here.&lt;/p&gt;
 &lt;p&gt;Stay tuned for more posts!&lt;/p&gt;</description>
     </item>
