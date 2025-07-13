@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Liang Zhang</description>
     <generator>Hugo -- 0.148.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 May 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Jun 2024 12:00:00 +0800</lastBuildDate>
     <atom:link href="https://liangzhang-keepmoving.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My First Blog</title>
+      <link>https://liangzhang-keepmoving.github.io/posts/my-first-blog/</link>
+      <pubDate>Mon, 10 Jun 2024 12:00:00 +0800</pubDate>
+      <guid>https://liangzhang-keepmoving.github.io/posts/my-first-blog/</guid>
+      <description>&lt;p&gt;这里是我的第一篇博客内容！&lt;/p&gt;</description>
+    </item>
     <item>
       <title>👋 Welcome to My Blog</title>
       <link>https://liangzhang-keepmoving.github.io/posts/welcome/</link>
