@@ -1,0 +1,63 @@
+baseURL = "https://your-github-username.github.io/"
+languageCode = "en-us"
+title = "Your Name"
+theme = "PaperMod"
+
+[params]
+  author = "Your Name"
+  description = "Personal website and blog."
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowToc = true
+  defaultTheme = "auto"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 1
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 2
+  [[menu.main]]
+    identifier = "project"
+    name = "Project"
+    url = "/project/"
+    weight = 3
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 4
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 5
+  [[menu.main]]
+    identifier = "research"
+    name = "Research"
+    url = "/research/"
+    weight = 6
+  [[menu.main]]
+    identifier = "publications"
+    name = "Publications"
+    url = "/publications/"
+    weight = 7
+  [[menu.main]]
+    identifier = "teaching"
+    name = "Teaching"
+    url = "/teaching/"
+    weight = 8
+  [[menu.main]]
+    identifier = "talks"
+    name = "Talks"
+    url = "/talks/"
+    weight = 9 

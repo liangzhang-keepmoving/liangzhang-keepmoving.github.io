@@ -1,0 +1,45 @@
+baseURL = "https://your-github-username.github.io/"
+languageCode = "en-us"
+title = "Liang Zhang"
+theme = "PaperMod"
+
+[params]
+  author = "Liang Zhang"
+  description = "Personal website and blog."
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowToc = true
+  defaultTheme = "auto"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 1
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 2
+  [[menu.main]]
+    identifier = "publications"
+    name = "Publications"
+    url = "/publications/"
+    weight = 3
+    
+  # "Tags" menu item: Navigates to the tags page, weight determines order in menu
+  # [[menu.main]]
+  #   identifier = "tags"
+  #   name = "Tags"
+  #   url = "/tags/"
+  #   weight = 4
+  # [[menu.main]]
+  #   identifier = "search"
+  #   name = "Search"
+  #   url = "/search/"
+  #   weight = 5 
