@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Liang Zhang</title>
-    <link>http://localhost:1313/</link>
+    <link>https://your-github-username.github.io/</link>
     <description>Recent content on Liang Zhang</description>
     <generator>Hugo -- 0.148.1</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 May 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://your-github-username.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>👋 Welcome to My Blog</title>
-      <link>http://localhost:1313/posts/welcome/</link>
+      <link>https://your-github-username.github.io/posts/welcome/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/welcome/</guid>
+      <guid>https://your-github-username.github.io/posts/welcome/</guid>
       <description>&lt;p&gt;Here, I will share my research, notes, and thoughts here.&lt;/p&gt;
 &lt;p&gt;Stay tuned for more posts!&lt;/p&gt;</description>
     </item>
     <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://your-github-username.github.io/about/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://your-github-username.github.io/about/</guid>
       <description>&lt;h1 id=&#34;about-me&#34;&gt;About Me&lt;/h1&gt;
 &lt;p&gt;&lt;strong&gt;Senior Research Engineer&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -45,9 +45,9 @@ Aug. 2017 - Aug. 2018&lt;/p&gt;</description>
     </item>
     <item>
       <title>Publications</title>
-      <link>http://localhost:1313/publications/</link>
+      <link>https://your-github-username.github.io/publications/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/publications/</guid>
+      <guid>https://your-github-username.github.io/publications/</guid>
       <description>&lt;h1 id=&#34;publications&#34;&gt;Publications&lt;/h1&gt;
 &lt;h2 id=&#34;selected-publications&#34;&gt;Selected Publications&lt;/h2&gt;
 &lt;ul&gt;
@@ -67,9 +67,9 @@ Aug. 2017 - Aug. 2018&lt;/p&gt;</description>
     </item>
     <item>
       <title>Research</title>
-      <link>http://localhost:1313/research/</link>
+      <link>https://your-github-username.github.io/research/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/research/</guid>
+      <guid>https://your-github-username.github.io/research/</guid>
       <description>&lt;h1 id=&#34;research&#34;&gt;Research&lt;/h1&gt;
 &lt;p&gt;My research interests include:&lt;/p&gt;
 &lt;ul&gt;
@@ -87,9 +87,9 @@ Aug. 2017 - Aug. 2018&lt;/p&gt;</description>
     </item>
     <item>
       <title>Talks</title>
-      <link>http://localhost:1313/talks/</link>
+      <link>https://your-github-username.github.io/talks/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/talks/</guid>
+      <guid>https://your-github-username.github.io/talks/</guid>
       <description>&lt;h1 id=&#34;recent-talks&#34;&gt;Recent Talks&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;&amp;ldquo;Talk Title 1&amp;rdquo; at Conference/Event, Date&lt;/li&gt;
@@ -99,9 +99,9 @@ Aug. 2017 - Aug. 2018&lt;/p&gt;</description>
     </item>
     <item>
       <title>Teaching</title>
-      <link>http://localhost:1313/teaching/</link>
+      <link>https://your-github-username.github.io/teaching/</link>
       <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/teaching/</guid>
+      <guid>https://your-github-username.github.io/teaching/</guid>
       <description>&lt;h1 id=&#34;teaching&#34;&gt;Teaching&lt;/h1&gt;
 &lt;h2 id=&#34;courses-taught&#34;&gt;Courses Taught&lt;/h2&gt;
 &lt;ul&gt;
