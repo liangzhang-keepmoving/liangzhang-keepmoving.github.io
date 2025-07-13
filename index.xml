@@ -1,117 +1,65 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Liang Zhang</title>
-    <link>https://liangzhang-keepmoving.github.io/</link>
-    <description>Recent content on Liang Zhang</description>
-    <generator>Hugo -- 0.148.1</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 01 May 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://liangzhang-keepmoving.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>👋 Welcome to My Blog</title>
-      <link>https://liangzhang-keepmoving.github.io/posts/welcome/</link>
-      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://liangzhang-keepmoving.github.io/posts/welcome/</guid>
-      <description>&lt;p&gt;Here, I will share my research, notes, and thoughts here.&lt;/p&gt;
-&lt;p&gt;Stay tuned for more posts!&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>About</title>
-      <link>https://liangzhang-keepmoving.github.io/about/</link>
-      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://liangzhang-keepmoving.github.io/about/</guid>
-      <description>&lt;h1 id=&#34;about-me&#34;&gt;About Me&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;Senior Research Engineer&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Mobile:&lt;/strong&gt; +86 13416661681&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Email:&lt;/strong&gt; &lt;a href=&#34;mailto:13416661681@163.com&#34;&gt;13416661681@163.com&lt;/a&gt;, &lt;a href=&#34;mailto:liya.liang.zhang@gmail.com&#34;&gt;liya.liang.zhang@gmail.com&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://scholar.google.com/citations?hl=en&amp;amp;user=3tjnwCEAAAAJ&amp;amp;sortby=pubdate&amp;amp;view_op=list_works&amp;amp;gmla=AJsN-F4pWfVRlIolYWSlHod2XGCPk8RX1fC9CZZfP_mr6i39HWY9vymwmgKqr0DwaIK4hrDr3xRlVp6xt6BBLLATwGsTBmOcyLZxL6Mfpg4MU9m9Ob9QXDU&#34;&gt;Google Scholar&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.linkedin.com/in/liangzhang-liya6666/&#34;&gt;LinkedIn&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Welcome to my personal website! Here you can find information about my research, publications, teaching, talks, and more.&lt;/p&gt;
-&lt;h2 id=&#34;education&#34;&gt;Education&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;King Abdullah University of Science and Technology (KAUST)&lt;/strong&gt;, Thuwal, Saudi Arabia&lt;br&gt;
-Doctor of Philosophy in Electrical and Computer Engineering&lt;br&gt;
-Aug. 2018 - Jun. 2022&lt;/p&gt;
-&lt;p&gt;Thesis title: Learning-Based Approaches for Next-Generation Intelligent Networks&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;King Abdullah University of Science and Technology (KAUST)&lt;/strong&gt;, Thuwal, Saudi Arabia&lt;br&gt;
-Master of Science in Electrical Engineering&lt;br&gt;
-Aug. 2017 - Aug. 2018&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Publications</title>
-      <link>https://liangzhang-keepmoving.github.io/publications/</link>
-      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://liangzhang-keepmoving.github.io/publications/</guid>
-      <description>&lt;h1 id=&#34;publications&#34;&gt;Publications&lt;/h1&gt;
-&lt;h2 id=&#34;selected-publications&#34;&gt;Selected Publications&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;L. Zhang, A. Celik, S. Dang and B. Shihada, “Energy-Efficient Trajectory Optimization for UAV-Assisted IoT Networks” in IEEE Transactions on Mobile Computing, vol. 21, no. 12, pp. 4323-4337, 1 Dec. 2022 (one of the fifty most popular papers of TMC).&lt;/li&gt;
-&lt;li&gt;L. Zhang, C. Zhang and B. Shihada, “Efficient Wireless Traffic Prediction at the Edge: A Federated Meta-Learning Approach” in IEEE Communications Letters, vol. 26, no. 7, pp. 1573-1577, Jul. 2022.&lt;/li&gt;
-&lt;li&gt;L. Zhang, C. Zhang, S. Dang and B. Shihada, “Lessons from the Commercial Failure of Project Loon for 6G Research Roadmap Design” in Frontiers in Communications and Networks, vol. 3, 2022.&lt;/li&gt;
-&lt;li&gt;L. Zhang, W. Abderrahim and B. Shihada, “Heterogeneous Traffic Offloading in Space-Air-Ground Integrated Networks” in IEEE Access, vol. 9, pp. 165462-165475, Dec. 2021.&lt;/li&gt;
-&lt;li&gt;L. Zhang, G. Ma, A. Al-Ghadhban, S. Dang and B. Shihada, “ICAQ: Adaptive QoS System for 5G and Beyond Applications” in IEEE ICCT, Nanning, China, 2020.&lt;/li&gt;
-&lt;li&gt;L. Bai, L. Zhang*, G. Zhang, L. Zhang, P Medagliani, and S. Martin, “A Distributed Congestion Mitigation Mechanism Based on Neighboring Nodes Traffic Steering” International Conference on Network of the Future, Izmir, Turkey, 2023.&lt;/li&gt;
-&lt;li&gt;X. Rao, H. Wang, L. Zhang, J. Li, S. Shang, P. Han, “FOGS: First-Order Gradient Supervision with Learning-based Graph for Traffic Flow Forecasting” in IJCAI, Messe Wien, Vienna, Austria, 2022.&lt;/li&gt;
-&lt;li&gt;Y. Xie, W. Pei, D. Guo, L. Zhang, H. Zhang, X. Guo, X. Xing, X. Yang, F. Wang, Q. Gui, Y. Wang, H. Chen, “Improving adhesion strength between layers of an implantable parylene-C electrode” in Sensors and Actuators A: Physical, vol. 260, pp. 117-123, 2017.&lt;/li&gt;
-&lt;li&gt;F. Wang, D. Guo, Y. Xie, L. Zhang, W. Pei, H. Chen, “An implantable optrode composed of fiber and flexible thin-film electrode” in Optoelectronics Letters, vol. 14, no. 4, pp. 271-275, 2018.&lt;/li&gt;
-&lt;li&gt;C. Zhang, G. Ma, L. Zhang, and B. Shihada, “Graph Convolutional Networks Empowered Origin-Destination Learning for Urban Traffic Prediction” CAAI Transactions on Intelligence Technology.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;full-publication-list&#34;&gt;Full Publication List&lt;/h2&gt;
-&lt;p&gt;See my &lt;a href=&#34;https://scholar.google.com/citations?hl=en&amp;amp;user=3tjnwCEAAAAJ&amp;amp;sortby=pubdate&amp;amp;view_op=list_works&amp;amp;gmla=AJsN-F4pWfVRlIolYWSlHod2XGCPk8RX1fC9CZZfP_mr6i39HWY9vymwmgKqr0DwaIK4hrDr3xRlVp6xt6BBLLATwGsTBmOcyLZxL6Mfpg4MU9m9Ob9QXDU&#34;&gt;Google Scholar&lt;/a&gt; for a complete list.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Research</title>
-      <link>https://liangzhang-keepmoving.github.io/research/</link>
-      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://liangzhang-keepmoving.github.io/research/</guid>
-      <description>&lt;h1 id=&#34;research&#34;&gt;Research&lt;/h1&gt;
-&lt;p&gt;My research interests include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Deep Learning&lt;/li&gt;
-&lt;li&gt;Natural Language Processing&lt;/li&gt;
-&lt;li&gt;Large Language Models&lt;/li&gt;
-&lt;li&gt;AI for Science&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;current-projects&#34;&gt;Current Projects&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Project 1: Description of your current research project.&lt;/li&gt;
-&lt;li&gt;Project 2: Description of another research project.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Feel free to contact me for collaboration opportunities.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Talks</title>
-      <link>https://liangzhang-keepmoving.github.io/talks/</link>
-      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://liangzhang-keepmoving.github.io/talks/</guid>
-      <description>&lt;h1 id=&#34;recent-talks&#34;&gt;Recent Talks&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;ldquo;Talk Title 1&amp;rdquo; at Conference/Event, Date&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;Talk Title 2&amp;rdquo; at Conference/Event, Date&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Add more talks and presentations as needed.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Teaching</title>
-      <link>https://liangzhang-keepmoving.github.io/teaching/</link>
-      <pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://liangzhang-keepmoving.github.io/teaching/</guid>
-      <description>&lt;h1 id=&#34;teaching&#34;&gt;Teaching&lt;/h1&gt;
-&lt;h2 id=&#34;courses-taught&#34;&gt;Courses Taught&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Course 1: Semester, Year&lt;/li&gt;
-&lt;li&gt;Course 2: Semester, Year&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;teaching-experience&#34;&gt;Teaching Experience&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Description of your teaching philosophy or experience.&lt;/li&gt;
-&lt;/ul&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Liang Zhang</title><link>https://liangzhang-keepmoving.github.io/</link><description>Recent content on Liang Zhang</description><generator>Hugo -- 0.148.1</generator><language>en-us</language><lastBuildDate>Mon, 10 Jun 2024 12:00:00 +0800</lastBuildDate><atom:link href="https://liangzhang-keepmoving.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>My First Blog</title><link>https://liangzhang-keepmoving.github.io/posts/my-first-blog/</link><pubDate>Mon, 10 Jun 2024 12:00:00 +0800</pubDate><guid>https://liangzhang-keepmoving.github.io/posts/my-first-blog/</guid><description>&lt;p>这里是我的第一篇博客内容！&lt;/p></description></item><item><title>👋 Welcome to My Blog</title><link>https://liangzhang-keepmoving.github.io/posts/welcome/</link><pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate><guid>https://liangzhang-keepmoving.github.io/posts/welcome/</guid><description>&lt;p>Here, I will share my research, notes, and thoughts here.&lt;/p>
+&lt;p>Stay tuned for more posts!&lt;/p></description></item><item><title>About</title><link>https://liangzhang-keepmoving.github.io/about/</link><pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate><guid>https://liangzhang-keepmoving.github.io/about/</guid><description>&lt;p>&lt;img alt="Profile Photo" loading="lazy" src="https://liangzhang-keepmoving.github.io/images/profile.jpg">&lt;/p>
+&lt;h1 id="about-me">About Me&lt;/h1>
+&lt;p>&lt;strong>Senior Research Engineer&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Mobile:&lt;/strong> +86 13416661681&lt;/li>
+&lt;li>&lt;strong>Email:&lt;/strong> &lt;a href="mailto:13416661681@163.com">13416661681@163.com&lt;/a>, &lt;a href="mailto:liya.liang.zhang@gmail.com">liya.liang.zhang@gmail.com&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://scholar.google.com/citations?hl=en&amp;amp;user=3tjnwCEAAAAJ&amp;amp;sortby=pubdate&amp;amp;view_op=list_works&amp;amp;gmla=AJsN-F4pWfVRlIolYWSlHod2XGCPk8RX1fC9CZZfP_mr6i39HWY9vymwmgKqr0DwaIK4hrDr3xRlVp6xt6BBLLATwGsTBmOcyLZxL6Mfpg4MU9m9Ob9QXDU">Google Scholar&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.linkedin.com/in/liangzhang-liya6666/">LinkedIn&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Welcome to my personal website! Here you can find information about my research, publications, teaching, talks, and more.&lt;/p>
+&lt;h2 id="education">Education&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>King Abdullah University of Science and Technology (KAUST)&lt;/strong>, Thuwal, Saudi Arabia&lt;br>
+Doctor of Philosophy in Electrical and Computer Engineering&lt;br>
+Aug. 2018 - Jun. 2022&lt;/p>
+&lt;p>Thesis title: Learning-Based Approaches for Next-Generation Intelligent Networks&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>King Abdullah University of Science and Technology (KAUST)&lt;/strong>, Thuwal, Saudi Arabia&lt;br>
+Master of Science in Electrical Engineering&lt;br>
+Aug. 2017 - Aug. 2018&lt;/p></description></item><item><title>Publications</title><link>https://liangzhang-keepmoving.github.io/publications/</link><pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate><guid>https://liangzhang-keepmoving.github.io/publications/</guid><description>&lt;h1 id="publications">Publications&lt;/h1>
+&lt;h2 id="selected-publications">Selected Publications&lt;/h2>
+&lt;ul>
+&lt;li>L. Zhang, A. Celik, S. Dang and B. Shihada, “Energy-Efficient Trajectory Optimization for UAV-Assisted IoT Networks” in IEEE Transactions on Mobile Computing, vol. 21, no. 12, pp. 4323-4337, 1 Dec. 2022 (one of the fifty most popular papers of TMC).&lt;/li>
+&lt;li>L. Zhang, C. Zhang and B. Shihada, “Efficient Wireless Traffic Prediction at the Edge: A Federated Meta-Learning Approach” in IEEE Communications Letters, vol. 26, no. 7, pp. 1573-1577, Jul. 2022.&lt;/li>
+&lt;li>L. Zhang, C. Zhang, S. Dang and B. Shihada, “Lessons from the Commercial Failure of Project Loon for 6G Research Roadmap Design” in Frontiers in Communications and Networks, vol. 3, 2022.&lt;/li>
+&lt;li>L. Zhang, W. Abderrahim and B. Shihada, “Heterogeneous Traffic Offloading in Space-Air-Ground Integrated Networks” in IEEE Access, vol. 9, pp. 165462-165475, Dec. 2021.&lt;/li>
+&lt;li>L. Zhang, G. Ma, A. Al-Ghadhban, S. Dang and B. Shihada, “ICAQ: Adaptive QoS System for 5G and Beyond Applications” in IEEE ICCT, Nanning, China, 2020.&lt;/li>
+&lt;li>L. Bai, L. Zhang*, G. Zhang, L. Zhang, P Medagliani, and S. Martin, “A Distributed Congestion Mitigation Mechanism Based on Neighboring Nodes Traffic Steering” International Conference on Network of the Future, Izmir, Turkey, 2023.&lt;/li>
+&lt;li>X. Rao, H. Wang, L. Zhang, J. Li, S. Shang, P. Han, “FOGS: First-Order Gradient Supervision with Learning-based Graph for Traffic Flow Forecasting” in IJCAI, Messe Wien, Vienna, Austria, 2022.&lt;/li>
+&lt;li>Y. Xie, W. Pei, D. Guo, L. Zhang, H. Zhang, X. Guo, X. Xing, X. Yang, F. Wang, Q. Gui, Y. Wang, H. Chen, “Improving adhesion strength between layers of an implantable parylene-C electrode” in Sensors and Actuators A: Physical, vol. 260, pp. 117-123, 2017.&lt;/li>
+&lt;li>F. Wang, D. Guo, Y. Xie, L. Zhang, W. Pei, H. Chen, “An implantable optrode composed of fiber and flexible thin-film electrode” in Optoelectronics Letters, vol. 14, no. 4, pp. 271-275, 2018.&lt;/li>
+&lt;li>C. Zhang, G. Ma, L. Zhang, and B. Shihada, “Graph Convolutional Networks Empowered Origin-Destination Learning for Urban Traffic Prediction” CAAI Transactions on Intelligence Technology.&lt;/li>
+&lt;/ul>
+&lt;h2 id="full-publication-list">Full Publication List&lt;/h2>
+&lt;p>See my &lt;a href="https://scholar.google.com/citations?hl=en&amp;amp;user=3tjnwCEAAAAJ&amp;amp;sortby=pubdate&amp;amp;view_op=list_works&amp;amp;gmla=AJsN-F4pWfVRlIolYWSlHod2XGCPk8RX1fC9CZZfP_mr6i39HWY9vymwmgKqr0DwaIK4hrDr3xRlVp6xt6BBLLATwGsTBmOcyLZxL6Mfpg4MU9m9Ob9QXDU">Google Scholar&lt;/a> for a complete list.&lt;/p></description></item><item><title>Research</title><link>https://liangzhang-keepmoving.github.io/research/</link><pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate><guid>https://liangzhang-keepmoving.github.io/research/</guid><description>&lt;h1 id="research">Research&lt;/h1>
+&lt;p>My research interests include:&lt;/p>
+&lt;ul>
+&lt;li>Deep Learning&lt;/li>
+&lt;li>Natural Language Processing&lt;/li>
+&lt;li>Large Language Models&lt;/li>
+&lt;li>AI for Science&lt;/li>
+&lt;/ul>
+&lt;h2 id="current-projects">Current Projects&lt;/h2>
+&lt;ul>
+&lt;li>Project 1: Description of your current research project.&lt;/li>
+&lt;li>Project 2: Description of another research project.&lt;/li>
+&lt;/ul>
+&lt;p>Feel free to contact me for collaboration opportunities.&lt;/p></description></item><item><title>Talks</title><link>https://liangzhang-keepmoving.github.io/talks/</link><pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate><guid>https://liangzhang-keepmoving.github.io/talks/</guid><description>&lt;h1 id="recent-talks">Recent Talks&lt;/h1>
+&lt;ul>
+&lt;li>&amp;ldquo;Talk Title 1&amp;rdquo; at Conference/Event, Date&lt;/li>
+&lt;li>&amp;ldquo;Talk Title 2&amp;rdquo; at Conference/Event, Date&lt;/li>
+&lt;/ul>
+&lt;p>Add more talks and presentations as needed.&lt;/p></description></item><item><title>Teaching</title><link>https://liangzhang-keepmoving.github.io/teaching/</link><pubDate>Wed, 01 May 2024 00:00:00 +0000</pubDate><guid>https://liangzhang-keepmoving.github.io/teaching/</guid><description>&lt;h1 id="teaching">Teaching&lt;/h1>
+&lt;h2 id="courses-taught">Courses Taught&lt;/h2>
+&lt;ul>
+&lt;li>Course 1: Semester, Year&lt;/li>
+&lt;li>Course 2: Semester, Year&lt;/li>
+&lt;/ul>
+&lt;h2 id="teaching-experience">Teaching Experience&lt;/h2>
+&lt;ul>
+&lt;li>Description of your teaching philosophy or experience.&lt;/li>
+&lt;/ul></description></item></channel></rss>
