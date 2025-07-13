@@ -51,3 +51,5 @@ Welcome to my personal website! Here you can find information about my research,
 - IEEE GLOBECOM
 - IEEE VTC Fall 2022 (TPC Member)
 - V-Electrical 2023 (Keynote speaker)
+
+![Profile Photo](/images/profile.jpg)
