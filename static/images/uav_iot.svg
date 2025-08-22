@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150">
+  <rect width="300" height="150" fill="#f5f5f5"/>
+  
+  <!-- Background Grid for Terrain -->
+  <g stroke="#e0e0e0" stroke-width="1">
+    <line x1="0" y1="100" x2="300" y2="100"/>
+    <line x1="50" y1="100" x2="50" y2="150"/>
+    <line x1="100" y1="100" x2="100" y2="150"/>
+    <line x1="150" y1="100" x2="150" y2="150"/>
+    <line x1="200" y1="100" x2="200" y2="150"/>
+    <line x1="250" y1="100" x2="250" y2="150"/>
+    <line x1="0" y1="125" x2="300" y2="125"/>
+    <line x1="0" y1="150" x2="300" y2="150"/>
+  </g>
+  
+  <!-- UAV -->
+  <g transform="translate(150, 50)">
+    <path d="M0,-20 L20,0 L0,10 L-20,0 Z" fill="#ea4335"/>
+    <line x1="0" y1="10" x2="0" y2="30" stroke="#666" stroke-width="2"/>
+  </g>
+  
+  <!-- IoT Devices -->
+  <circle cx="80" cy="110" r="8" fill="#4285f4"/>
+  <circle cx="150" cy="130" r="8" fill="#4285f4"/>
+  <circle cx="220" cy="115" r="8" fill="#4285f4"/>
+  
+  <!-- Connection Lines -->
+  <line x1="150" y1="80" x2="80" y2="110" stroke="#666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="150" y1="80" x2="150" y2="130" stroke="#666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="150" y1="80" x2="220" y2="115" stroke="#666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  
+  <!-- Title -->
+  <text x="150" y="20" font-family="Arial" font-size="14" font-weight="bold" fill="#333" text-anchor="middle">UAV-Assisted IoT Networks</text>
+  <text x="150" y="35" font-family="Arial" font-size="12" fill="#666" text-anchor="middle">Energy-Efficient Trajectory Optimization</text>
+</svg>
