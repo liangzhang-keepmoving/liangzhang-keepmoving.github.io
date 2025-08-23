@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>matrix_mult_explanation - Liang Zhang</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; margin: 0; padding: 0; line-height: 1.6; color: #333; }
+        .header { background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #333; text-decoration: none; }
+        #menu { list-style: none; display: flex; margin: 0; padding: 0; }
+        #menu li { margin-left: 1.5rem; }
+        #menu a { text-decoration: none; color: #333; font-weight: 500; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        .header-photo { position: absolute; right: 40px; top: 200px; transform: translateY(-50%); z-index: 999; }
+        .header-photo img { height: 200px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/liangzhang-keepmoving.github.io" class="logo">Liang Zhang</a>
+            <ul id="menu">
+                <li><a href="/liangzhang-keepmoving.github.io/posts/">Posts</a></li>
+                <li><a href="/liangzhang-keepmoving.github.io/about/">About</a></li>
+                <li><a href="/liangzhang-keepmoving.github.io/project/">Project</a></li>
+                <li><a href="/liangzhang-keepmoving.github.io/publications/">Publications</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h1>共享内存优化的矩阵乘法示例详解</h1>
+<h2>共享内存的重要性</h2>
+<p>共享内存是CUDA编程中一种快速的片上内存，访问速度比全局内存快得多（大约快10-100倍）。在矩阵乘法等内存密集型操作中，合理使用共享内存可以显著提高性能。</p>
+<h2>代码核心解析</h2>
+<h3>1. 共享内存的声明与使用</h3>
+<p>```cuda</p>
+<p>// 在内核函数中声明共享内存</p>
+<p>__shared__ float s_A[BLOCK_SIZE][BLOCK_SIZE];</p>
+<p>__shared__ float s_B[BLOCK_SIZE][BLOCK_SIZE];</p>
+<p>```</p>
+<ul>
+    <li>`__shared__` 关键字：声明这是一块共享内存，对线程块内的所有线程可见</li>
+    <li>大小固定：共享内存的大小在编译时确定，通常受限于GPU架构（一般为几十KB）</li>
+    <li>作用域：共享内存在线程块执行期间存在，线程块结束后自动释放</li>
+</ul>
+<h3>2. 分块计算策略</h3>
+<p>矩阵乘法的分块计算是基于以下数学原理：</p>
+<p>对于矩阵C = A × B，我们可以将A和B分成多个子矩阵，然后计算每个子矩阵的乘积，最后合并结果。</p>
+<p>```cuda</p>
+<p>// 循环处理所有必要的子矩阵</p>
+<p>for (int m = 0; m < (MATRIX_SIZE + BLOCK_SIZE - 1) / BLOCK_SIZE; ++m)</p>
+<p>{</p>
+<p>// 加载子矩阵到共享内存</p>
+<p>// ...</p>
+<p>// 同步线程块内的所有线程</p>
+<p>__syncthreads();</p>
+<p>// 计算子矩阵乘积</p>
+<p>for (int k = 0; k < BLOCK_SIZE; ++k)</p>
+<p>{</p>
+<p>sum += s_A[ty][k] * s_B[k][tx];</p>
+<p>}</p>
+<p>// 同步确保计算完成</p>
+<p>__syncthreads();</p>
+<p>}</p>
+<p>```</p>
+<h3>3. 线程同步</h3>
+<p>```cuda</p>
+<p>__syncthreads();</p>
+<p>```</p>
+<ul>
+    <li>`__syncthreads()` 函数：确保线程块内的所有线程都执行到该点后才继续执行</li>
+    <li>必要的同步：在读取其他线程加载到共享内存的数据前，必须确保数据已完全加载</li>
+    <li>注意事项：同步操作会带来一定开销，应尽量减少同步次数</li>
+</ul>
+<h3>4. 二维线程配置</h3>
+<p>```cuda</p>
+<p>dim3 threadsPerBlock(BLOCK_SIZE, BLOCK_SIZE);</p>
+<p>dim3 blocksPerGrid((MATRIX_SIZE + threadsPerBlock.x - 1) / threadsPerBlock.x,</p>
+<p>(MATRIX_SIZE + threadsPerBlock.y - 1) / threadsPerBlock.y);</p>
+<p>```</p>
+<ul>
+    <li>`dim3` 类型：用于指定三维线程配置</li>
+    <li>二维线程块：每个线程块包含BLOCK_SIZE×BLOCK_SIZE个线程，对应子矩阵的大小</li>
+    <li>二维网格：确保覆盖整个矩阵</li>
+</ul>
+<h2>共享内存优化的工作原理</h2>
+<h3>1. 全局内存访问减少</h3>
+<p>在未优化的矩阵乘法中，每个元素A[i][k]和B[k][j]会被访问多次。例如，A的一行中的每个元素会被用来计算C的一行中的所有元素。</p>
+<p>通过分块计算和共享内存：</p>
+<ul>
+    <li>每个子矩阵只从全局内存加载一次</li>
+    <li>在共享内存中可以被多次访问，大大减少了全局内存访问次数</li>
+</ul>
+<h3>2. 内存访问模式优化</h3>
+<p>共享内存优化还改善了内存访问模式：</p>
+<ul>
+    <li>**合并访问**：线程块内的线程同时访问连续的内存地址</li>
+    <li>**空间局部性**：相邻线程访问相邻的数据，提高缓存命中率</li>
+    <li>**时间局部性**：数据在短时间内被多次使用</li>
+</ul>
+<h3>3. 性能提升计算</h3>
+<p>假设矩阵大小为N×N，使用大小为B×B的线程块：</p>
+<ul>
+    <li>**全局内存访问次数**：从O(N³)减少到O(N³/B)</li>
+    <li>**共享内存访问次数**：增加到O(N³)</li>
+</ul>
+<p>由于共享内存的访问速度远快于全局内存，整体性能得到显著提升。</p>
+<h2>进一步优化建议</h2>
+<p>1. **使用Tensor Core加速**：</p>
+<p>```cuda</p>
+<p>// 使用CUDA的wmma API进行Tensor Core加速</p>
+<p>#include <mma.h></p>
+<p>using namespace nvcuda;</p>
+<p>__global__ void matrixMultWMMA(float* A, float* B, float* C)</p>
+<p>{</p>
+<p>// 声明片段用于Tensor Core操作</p>
+<p>wmma::fragment<wmma::matrix_a, 16, 16, 16, half, wmma::row_major> a_frag;</p>
+<p>wmma::fragment<wmma::matrix_b, 16, 16, 16, half, wmma::row_major> b_frag;</p>
+<p>wmma::fragment<wmma::accumulator, 16, 16, 16, float> c_frag;</p>
+<p>// 初始化累加器</p>
+<p>wmma::fill_fragment(c_frag, 0.0f);</p>
+<p>// 加载数据到片段</p>
+<p>wmma::load_matrix_sync(a_frag, A + row * MATRIX_SIZE + col, MATRIX_SIZE);</p>
+<p>wmma::load_matrix_sync(b_frag, B + row * MATRIX_SIZE + col, MATRIX_SIZE);</p>
+<p>// 执行矩阵乘法</p>
+<p>wmma::mma_sync(c_frag, a_frag, b_frag, c_frag);</p>
+<p>// 存储结果</p>
+<p>wmma::store_matrix_sync(C + row * MATRIX_SIZE + col, c_frag, MATRIX_SIZE, wmma::mem_row_major);</p>
+<p>}</p>
+<p>```</p>
+<p>2. **实现混合精度计算**：</p>
+<ul>
+    <li>使用FP16存储权重和激活值</li>
+    <li>使用FP32进行累加，减少数值精度损失</li>
+    <li>利用NVIDIA的AMP（Automatic Mixed Precision）或AMD的类似技术</li>
+</ul>
+<p>3. **多级分块**：</p>
+<ul>
+    <li>结合寄存器分块、共享内存分块和L2缓存分块</li>
+    <li>针对不同层级的内存层次结构进行优化</li>
+</ul>
+<p>通过深入理解共享内存和其他GPU内存优化技术，可以显著提升GPU程序的性能。</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vector_add_explanation - Liang Zhang</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; margin: 0; padding: 0; line-height: 1.6; color: #333; }
+        .header { background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; }
+        .nav { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #333; text-decoration: none; }
+        #menu { list-style: none; display: flex; margin: 0; padding: 0; }
+        #menu li { margin-left: 1.5rem; }
+        #menu a { text-decoration: none; color: #333; font-weight: 500; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        .header-photo { position: absolute; right: 40px; top: 200px; transform: translateY(-50%); z-index: 999; }
+        .header-photo img { height: 200px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/liangzhang-keepmoving.github.io" class="logo">Liang Zhang</a>
+            <ul id="menu">
+                <li><a href="/liangzhang-keepmoving.github.io/posts/">Posts</a></li>
+                <li><a href="/liangzhang-keepmoving.github.io/about/">About</a></li>
+                <li><a href="/liangzhang-keepmoving.github.io/project/">Project</a></li>
+                <li><a href="/liangzhang-keepmoving.github.io/publications/">Publications</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <h1>CUDA向量加法示例详解</h1>
+<h2>核心概念解析</h2>
+<p>本示例展示了CUDA编程的基本模式和核心概念，这是GPU编程的基础。下面详细解释代码中的关键部分：</p>
+<h3>1. CUDA核函数</h3>
+<p>```cuda</p>
+<p>__global__ void vectorAdd(const float* A, const float* B, float* C, int numElements)</p>
+<p>{</p>
+<p>int i = blockDim.x * blockIdx.x + threadIdx.x;</p>
+<p>if (i < numElements)</p>
+<p>{</p>
+<p>C[i] = A[i] + B[i];</p>
+<p>}</p>
+<p>}</p>
+<p>```</p>
+<p><img src="/liangzhang-keepmoving.github.io/images/vector_add_kernel.svg" alt="vectorAdd核函数解析" style="max-width: 100%;"></p>
+<ul>
+    <li>`__global__` 关键字：表示这是一个可以从CPU调用并在GPU上执行的函数</li>
+    <li>线程层次结构：通过`blockIdx.x`（块索引）和`threadIdx.x`（线程索引）来确定每个线程处理的数据位置</li>
+    <li>`blockDim.x`：每个线程块中的线程数</li>
+    <li>边界检查：确保线程不会访问超出数组范围的内存</li>
+</ul>
+<h3>2. 内存管理</h3>
+<p>CUDA编程中，内存管理是一个关键环节，通常遵循以下步骤：</p>
+<p><img src="/liangzhang-keepmoving.github.io/images/cuda_memory_management.svg" alt="CUDA内存管理流程" style="max-width: 100%;"></p>
+<p>1. **分配主机内存**：使用标准C++容器或内存分配函数</p>
+<p>2. **分配设备内存**：使用`cudaMalloc`函数</p>
+<p>3. **数据传输**：</p>
+<ul>
+    <li>主机到设备：`cudaMemcpyHostToDevice`</li>
+    <li>设备到主机：`cudaMemcpyDeviceToHost`</li>
+</ul>
+<p>4. **释放内存**：使用`cudaFree`释放设备内存</p>
+<h3>3. 线程配置</h3>
+<p><img src="/liangzhang-keepmoving.github.io/images/cuda_thread_hierarchy.svg" alt="CUDA线程层次结构" style="max-width: 100%;"></p>
+<p>```cuda</p>
+<p>int threadsPerBlock = 256;</p>
+<p>int blocksPerGrid = (numElements + threadsPerBlock - 1) / threadsPerBlock;</p>
+<p>vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);</p>
+<p>```</p>
+<ul>
+    <li>**线程块大小**：通常选择256、512等，取决于GPU架构和计算需求</li>
+    <li>**网格大小计算**：确保所有元素都能被处理，向上取整</li>
+    <li>**执行配置语法**：`<<<blocksPerGrid, threadsPerBlock>>>`指定了核函数的执行配置</li>
+</ul>
+<h3>4. 同步与错误检查</h3>
+<p><img src="/liangzhang-keepmoving.github.io/images/vector_add_execution.svg" alt="CUDA向量加法执行流程" style="max-width: 100%;"></p>
+<p>```cuda</p>
+<p>cudaDeviceSynchronize();</p>
+<p>cudaError_t error = cudaGetLastError();</p>
+<p>```</p>
+<ul>
+    <li>`cudaDeviceSynchronize()`：确保GPU上的所有操作都已完成，用于精确计时</li>
+    <li>错误检查：使用`cudaGetLastError()`检查核函数启动时可能发生的错误</li>
+</ul>
+<h2>代码优化建议</h2>
+<p>1. **添加异步数据传输**：使用CUDA流重叠计算和数据传输</p>
+<p>```cuda</p>
+<p>cudaStream_t stream;</p>
+<p>cudaStreamCreate(&stream);</p>
+<p>// 异步数据传输</p>
+<p>cudaMemcpyAsync(d_A, h_A.data(), size, cudaMemcpyHostToDevice, stream);</p>
+<p>cudaMemcpyAsync(d_B, h_B.data(), size, cudaMemcpyHostToDevice, stream);</p>
+<p>// 在流中启动核函数</p>
+<p>vectorAdd<<<blocksPerGrid, threadsPerBlock, 0, stream>>>(d_A, d_B, d_C, numElements);</p>
+<p>// 异步复制结果</p>
+<p>cudaMemcpyAsync(h_C.data(), d_C, size, cudaMemcpyDeviceToHost, stream);</p>
+<p>// 等待流完成</p>
+<p>cudaStreamSynchronize(stream);</p>
+<p>```</p>
+<p>2. **使用统一内存**：简化内存管理</p>
+<p>```cuda</p>
+<p>float* u_A = NULL;</p>
+<p>float* u_B = NULL;</p>
+<p>float* u_C = NULL;</p>
+<p>cudaMallocManaged(&u_A, size);</p>
+<p>cudaMallocManaged(&u_B, size);</p>
+<p>cudaMallocManaged(&u_C, size);</p>
+<p>// 直接在主机上初始化数据</p>
+<p>for (int i = 0; i < numElements; ++i)</p>
+<p>{</p>
+<p>u_A[i] = rand() / (float)RAND_MAX;</p>
+<p>u_B[i] = rand() / (float)RAND_MAX;</p>
+<p>}</p>
+<p>// 核函数执行</p>
+<p>vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(u_A, u_B, u_C, numElements);</p>
+<p>// 确保结果对主机可见</p>
+<p>cudaDeviceSynchronize();</p>
+<p>// 释放统一内存</p>
+<p>cudaFree(u_A);</p>
+<p>cudaFree(u_B);</p>
+<p>cudaFree(u_C);</p>
+<p>```</p>
+<p>3. **添加性能测量**：对比不同优化策略的效果</p>
+<p>通过这些优化，可以显著提高GPU程序的性能。</p>
+    </div>
+</body>
+</html>
