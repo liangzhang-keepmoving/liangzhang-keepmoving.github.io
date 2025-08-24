@@ -21,12 +21,12 @@ Developing novel techniques to optimize inference performance of large language 
 ### Multi-AZ/Region Distributed Learning
 
 <div style="float: left; margin-right: 20px; margin-bottom: 20px;">
-  <a href="https://github.com/liangzhang-keepmoving/CrossZonedllm" target="_blank">
+  <a href="https://github.com/liangzhang-keepmoving/distributedllm" target="_blank">
     <img src="/images/multi_az_learning.svg" alt="Multi-AZ/Region Distributed Learning" width="300" height="150">
   </a>
 </div>
 
-Creating scalable frameworks for training large models across geographically distributed data centers, addressing challenges in synchronization, communication efficiency, and fault tolerance. <a href="https://github.com/liangzhang-keepmoving/CrossZonedllm" target="_blank">View on GitHub</a>.
+Creating scalable frameworks for training large models across geographically distributed data centers, addressing challenges in synchronization, communication efficiency, and fault tolerance. <a href="https://github.com/liangzhang-keepmoving/distributedllm" target="_blank">View on GitHub</a> | <a href="https://github.com/liangzhang-keepmoving/distributedllm/tree/main" target="_blank">Main Branch</a>.
 
 <div style="clear: both; margin-bottom: 30px;"></div>
 
