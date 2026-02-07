@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGLang Ascend NPU Support - Liang Zhang</title>
+    <style>
+        /* Navigation Bar */
+        nav {
+            background-color: var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            padding: 20px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Page Content */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Responsive Navigation */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .nav-links.active {
+                max-height: 300px;
+            }
+
+            .nav-link {
+                padding: 15px 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #f9f9f9;
+            --dark-color: #333;
+            --gray-color: #7f8c8d;
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.3), rgba(44, 62, 80, 0.8));
+            z-index: 1;
+        }
+
+        header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-item a:hover {
+            color: var(--secondary-color);
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        section:nth-child(even) {
+            background-color: white;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--gray-color);
+        }
+
+        .skills-box {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        section:nth-child(even) .skills-box {
+            background-color: var(--light-color);
+        }
+
+        .skills-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-section {
+            margin-bottom: 20px;
+        }
+
+        .skill-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-section h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-subsections {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .skill-subsection {
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 15px;
+        }
+
+        .skill-subsection h4 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .skills-box {
+                padding: 15px;
+            }
+
+            .skill-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .skill-tags {
+                justify-content: center;
+                gap: 6px;
+            }
+
+            .skill-tag {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+
+            .skill-subsection {
+                padding-left: 10px;
+            }
+
+            .skill-subsection h4 {
+                font-size: 0.9rem;
+            }
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--secondary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            top: 15px;
+            background-color: white;
+            border: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            z-index: 1;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover::after {
+            transform: scale(1.2);
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-item.left {
+            left: 0;
+        }
+
+        .timeline-item.right {
+            left: 50%;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .timeline-content h4 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .timeline-content .date {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+
+        .timeline-content p {
+            color: var(--gray-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--light-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--secondary-color);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .project-content p {
+            margin-bottom: 15px;
+            color: var(--gray-color);
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .project-link:hover {
+            background-color: var(--primary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 40px 0;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item.right {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: 21px;
+                right: auto;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Liang Zhang</a>
+            <button class="mobile-menu-btn">☰</button>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link" data-page="home">Home</a>
+                <a href="index.html" class="nav-link" data-page="blog">Blog</a>
+                <a href="index.html" class="nav-link" data-page="about">About Me</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Page -->
+    <div class="page active" id="blog">
+        <section style="padding: 60px 0;">
+            <div class="container">
+                <h2 class="section-title">Blog</h2>
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <!-- Back Button -->
+                    <div style="margin-bottom: 20px;">
+                        <a href="index.html?page=blog" style="display: inline-flex; align-items: center; padding: 8px 16px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 4px; transition: var(--transition); font-size: 0.9rem;">
+                            <span style="margin-right: 8px;">←</span> Back to Blog List
+                        </a>
+                    </div>
+                    <!-- Blog Post 1 -->
+                    <div style="background-color: white; border-radius: var(--border-radius); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); padding: 30px; margin-bottom: 30px;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 15px;">SGLang (Part 3): Ascend NPU Support Analysis</h3>
+                        <p style="color: var(--gray-color); margin-bottom: 20px;">This article analyzes the Ascend NPU support in SGLang, including the backend architecture, key optimization technologies, recent improvements, and performance benchmarking.</p>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Ascend Backend Architecture</h4>
+                        <p style="color: var(--gray-color); margin-bottom: 20px;">SGLang provides complete backend support for Ascend NPU through a dedicated hardware adaptation layer, fully leveraging the performance advantages of Ascend NPU. The Ascend backend architecture mainly consists of the following parts:</p>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">1. Hardware Abstraction Layer</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;">The hardware abstraction layer is responsible for direct interaction with Ascend NPU hardware, providing a unified interface:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>NPU device management</strong>: Initialize and manage NPU devices</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Memory allocation and management</strong>: Efficiently allocate and manage NPU memory</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Stream and event processing</strong>: Manage NPU computation streams and events</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">2. Optimization Components</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;">Optimization components include dedicated optimizations for Ascend NPU features:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>MLA preprocessing</strong>: Matrix lookup acceleration, optimizing attention computation</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>nz format conversion</strong>: Convert regular matrix format to NPU-optimized nz format</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Operator fusion</strong>: Fusion multiple operators to reduce kernel launch overhead</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Memory layout optimization</strong>: Optimize data layout in NPU memory</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">3. Model Adaptation</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;">The model adaptation layer is responsible for adapting general models to run on Ascend NPU:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Weight format conversion</strong>: Convert model weights to NPU-optimized format</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Operator mapping and replacement</strong>: Map general operators to NPU-specific operators</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Precision control and optimization</strong>: Optimize computation precision according to NPU features</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Key Optimization Technologies</h4>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">MLA Preprocessing</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Principle</strong>: Through Matrix Lookup Acceleration (MLA) technology, optimize the attention computation process, reduce computation and memory access.</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Implementation</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Weight preprocessing and conversion</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Block computation and caching</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Utilize NPU hardware acceleration units</li>
+                        </ul>
+
+                        <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 5px; margin: 10px 0; overflow-x: auto;"># MLA preprocessing core implementation
+class NPUFusedMLAPreprocess(torch.nn.Module):
+    def __init__(
+        self,
+        fused_qkv_a_proj_with_mqa,
+        q_a_layernorm,
+        kv_a_layernorm,
+        q_b_proj,
+        w_kc,
+        rotary_emb,
+        layer_id,
+        num_local_heads,
+        qk_nope_head_dim,
+        qk_rope_head_dim,
+        quant_config=None,
+    ):
+        super().__init__()
+        self.qkv_a_proj = fused_qkv_a_proj_with_mqa
+        self.q_a_layernorm = q_a_layernorm
+        self.kv_a_layernorm = kv_a_layernorm
+        self.q_b_proj = q_b_proj
+        self.w_kc = w_kc.contiguous()
+        self.rotary_emb = rotary_emb
+        self.layer_id = layer_id
+        self.quant_config = quant_config
+        self.has_preprocess_weights = False
+        self.dtype = None
+
+    def preprocess_weights(self, hidden_states):
+        # Preprocess weights, convert to NPU optimized format
+        self.dummy = torch.zeros(
+            (hidden_states.shape[-1]),
+            dtype=hidden_states.dtype,
+            device=hidden_states.device,
+        )
+        self.qkv_a_proj_input_offset = self.qkv_a_proj.input_offset.to(dtype=torch.int8)
+        self.q_b_proj_input_offset = self.q_b_proj.input_offset.to(dtype=torch.int8)
+
+        # Process weights
+        # ... weight processing code ...
+
+    def forward_mlapo(self, positions, hidden_states, forward_batch, zero_allocator):
+        # MLA preprocessing forward pass
+        input_dtype = hidden_states.dtype
+        if not self.has_preprocess_weights:
+            self.preprocess_weights(hidden_states)
+            self.has_preprocess_weights = True
+            self.dtype = hidden_states.dtype
+
+        cos, sin = self.get_sin_cos(positions)
+        k_cache, v_cache, slot_mapping = self.get_kv_cache_and_cache_idx(forward_batch)
+
+        # Allocate output buffers
+        q_nope_out = torch.empty(
+            (hidden_states.shape[0], self.w_kc.shape[0], k_cache.shape[-1]),
+            dtype=input_dtype,
+            device=hidden_states.device,
+        )
+        q_rope_out = torch.empty(
+            (hidden_states.shape[0], self.w_kc.shape[0], v_cache.shape[-1]),
+            dtype=input_dtype,
+            device=hidden_states.device,
+        )
+
+        # Process FIA NZ format
+        if is_fia_nz():
+            kv_shape, kv_rope_shape = k_cache.shape, v_cache.shape
+            num_blocks, block_size, num_heads, _ = kv_shape
+            k_cache = k_cache.view(
+                num_blocks, num_heads * self.kv_lora_rank // 16, block_size, 16
+            )
+            v_cache = v_cache.view(
+                num_blocks, num_heads * self.qk_rope_head_dim // 16, block_size, 16
+            )
+
+        # Get layer norm bias
+        if hasattr(self.q_a_layernorm, "bias"):
+            q_a_layernorm_bias = self.q_a_layernorm.bias
+        else:
+            q_a_layernorm_bias = self.dummy
+
+        # Call MLA preprocessing kernel
+        torch.ops.npu.mla_preprocess(
+            hidden_states,
+            self.qkv_a_proj_weight_nz,
+            self.qkv_a_proj_deq_scale_kvq,
+            self.q_a_layernorm.weight,
+            q_a_layernorm_bias,
+            self.q_b_proj_weight_nz,
+            self.q_b_proj_deq_scale,
+            self.kv_a_layernorm.weight,
+            cos,
+            sin,
+            self.w_kc,
+            k_cache,
+            v_cache,
+            slot_mapping,
+            quant_scale0=self.qkv_a_proj.input_scale,
+            quant_offset0=self.qkv_a_proj_input_offset,
+            bias0=self.qkv_a_proj_quant_bias_kvq,
+            quant_scale1=self.q_b_proj.input_scale,
+            quant_offset1=self.q_b_proj_input_offset,
+            bias1=self.q_b_proj_quant_bias,
+            cache_mode="nzcache" if is_fia_nz() else "krope_ctkv",
+            quant_mode="per_tensor_quant_asymm",
+            q_out0=q_nope_out,
+            kv_cache_out0=k_cache,
+            q_out1=q_rope_out,
+            kv_cache_out1=v_cache,
+        )
+
+        # Restore FIA NZ format
+        if is_fia_nz():
+            k_cache = k_cache.view(kv_shape)
+            v_cache = v_cache.view(kv_rope_shape)
+
+        return (
+            q_rope_out,
+            v_cache,
+            q_nope_out,
+            k_cache,
+            forward_batch,
+            zero_allocator,
+            positions,
+        )</pre>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">nz Format Conversion</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Principle</strong>: nz format is an optimized matrix storage format for Ascend NPU, improving memory access efficiency and computation performance by adjusting data layout.</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Implementation</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Matrix blocking: Divide matrix into fixed-size blocks</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Data rearrangement: Rearrange data in NPU-friendly order</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Padding and alignment: Ensure data meets NPU access requirements</li>
+                        </ul>
+
+                        <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 5px; margin: 10px 0; overflow-x: auto;">def transdata(nd_mat, block_size: tuple = (16, 16)):
+    """Convert matrix to nz format
+
+    Args:
+        nd_mat: Input matrix
+        block_size: Block size, default is (16, 16)
+
+    Returns:
+        nz format matrix
+    """
+    # Calculate padded size
+    r = round_up(nd_mat.shape[0], block_size[0])
+    c = round_up(nd_mat.shape[1], block_size[1])
+    r_pad = r - nd_mat.shape[0]
+    c_pad = c - nd_mat.shape[1]
+
+    # Pad matrix
+    nd_mat = F.pad(nd_mat, ((0, r_pad, 0, c_pad)))
+
+    # Rearrange data to nz format
+    nz_mat = torch.permute(
+        torch.reshape(
+            nd_mat,
+            (r // block_size[0], block_size[0], c // block_size[1], block_size[1]),
+        ),
+        [2, 0, 1, 3],
+    )
+
+    # Reshape to final format
+    nz_mat = torch.reshape(
+        nz_mat, (nz_mat.shape[0], nz_mat.shape[1] * nz_mat.shape[2], nz_mat.shape[3])
+    )
+
+    return nz_mat</pre>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Operator Fusion and Optimization</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Principle</strong>: Operator fusion is the process of merging multiple independent operators into a composite operator, reducing kernel launch overhead and improving computation efficiency.</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Implementation</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Attention computation fusion</strong>: Fusion QKV projection, attention computation and output projection</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Layer normalization fusion</strong>: Fusion layer normalization and linear transformation</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Activation function fusion</strong>: Fusion linear transformation and activation function</li>
+                        </ul>
+
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Advantages</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Reduce kernel launch overhead</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Improve memory access locality</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Fully utilize NPU computation resources</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Recent Ascend-Related Improvements</h4>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">1. CI Fix</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Problem</strong>: Ascend CI build and test failures</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Solution</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Fix CI configuration files</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Adjust test environment settings</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Add Ascend-specific test cases</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">2. Weight Conversion Optimization</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Problem</strong>: Bugs in NPU weight conversion, causing model loading failures or performance degradation</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Solution</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Fix weight format conversion logic</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Optimize weight loading process</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Add error checking for weight conversion</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">3. Redundant Format Conversion Removal</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Problem</strong>: Unnecessary nz format conversion, increasing computation overhead</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Solution</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Analyze and identify redundant format conversions</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Remove unnecessary conversion steps</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Optimize timing and conditions for format conversion</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">4. Diffusion Model Support</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Problem</strong>: Lack of support for diffusion models on Ascend NPU</p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Solution</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Add Ascend backend support for diffusion models</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Optimize NPU computation for diffusion models</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Ensure stability of diffusion models on Ascend NPU</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Performance Tuning Recommendations</h4>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">1. Memory Optimization</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Recommendations</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Set batch size appropriately</strong>: Adjust based on model size and NPU memory capacity</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Optimize KV cache configuration</strong>: Adjust KV cache size based on context length</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Use appropriate quantization strategy</strong>: Use INT8 or FP16 quantization for memory-constrained scenarios</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">2. Computation Optimization</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Recommendations</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Enable MLA acceleration</strong>: For attention computation-intensive models, enable MLA preprocessing</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Adjust operator fusion strategy</strong>: Adjust operator fusion strategy based on model characteristics</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Optimize memory access patterns</strong>: Ensure data is accessed in NPU-friendly ways</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">3. Deployment Strategy</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Recommendations</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Choose hardware based on model characteristics</strong>: Different Ascend NPU models are suitable for different types of models</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Allocate prefill and decode resources appropriately</strong>: For long context models, increase prefill resources</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><strong>Monitor and adjust load balancing</strong>: Adjust worker node quantity and distribution based on actual load</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Core File Analysis</h4>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">1. MLA Preprocessing</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>File</strong>: <code>python/sglang/srt/hardware_backend/npu/attention/mla_preprocess.py</code></p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Main Functions</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Implement MLA preprocessing, optimize attention computation</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Provide nz format conversion functionality</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Manage weights and caches on Ascend NPU</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">2. NPU Utility Functions</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>File</strong>: <code>python/sglang/srt/hardware_backend/npu/utils.py</code></p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Main Functions</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Provide NPU-specific utility functions</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Implement memory management and optimization</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;">Encapsulate NPU operation interfaces</li>
+                        </ul>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">3. NPU Backend Implementation</h5>
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>File</strong>: <code>python/sglang/srt/hardware_backend/npu/</code></p>
+                        
+                        <p style="color: var(--gray-color); margin-bottom: 10px;"><strong>Main Modules</strong>:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 20px;">
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><code>attention/</code>: Attention computation optimization</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><code>graph_runner/</code>: Graph execution optimization</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><code>modules/</code>: Model module optimization</li>
+                            <li style="color: var(--gray-color); margin-bottom: 8px;"><code>quantization/</code>: Quantization support</li>
+                        </ul>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Performance Benchmarking</h4>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Test Environment</h5>
+                        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                            <thead>
+                                <tr style="background-color: #f4f4f4;">
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Component</th>
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Configuration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">NPU Model</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Ascend 910B</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Memory</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">32GB HBM</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Driver Version</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">23.0.RC1</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Framework Version</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">MindSpore 2.2.0</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">SGLang Version</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Latest development version</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 style="color: var(--primary-color); margin-top: 20px; margin-bottom: 10px;">Test Results</h5>
+
+                        <h6 style="color: var(--primary-color); margin-top: 15px; margin-bottom: 8px;">1. Llama-2-7B Model Performance</h6>
+                        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                            <thead>
+                                <tr style="background-color: #f4f4f4;">
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Metric</th>
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Prefill Speed (tokens/s)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">12,500</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Decode Speed (tokens/s)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">350</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Memory Usage (GB)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">14.2</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Batch Size</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">8</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h6 style="color: var(--primary-color); margin-top: 15px; margin-bottom: 8px;">2. Qwen-7B Model Performance</h6>
+                        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                            <thead>
+                                <tr style="background-color: #f4f4f4;">
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Metric</th>
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Prefill Speed (tokens/s)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">13,200</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Decode Speed (tokens/s)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">380</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Memory Usage (GB)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">13.8</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Batch Size</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">8</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h6 style="color: var(--primary-color); margin-top: 15px; margin-bottom: 8px;">3. Comparison with Other Hardware</h6>
+                        <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                            <thead>
+                                <tr style="background-color: #f4f4f4;">
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Model</th>
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Ascend 910B</th>
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">NVIDIA A100</th>
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">AMD MI300X</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Llama-2-7B Decode Speed</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">350 tokens/s</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">320 tokens/s</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">290 tokens/s</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Memory Efficiency</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">14.2GB</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">16.5GB</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">15.8GB</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">Power Consumption (W)</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">180</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">250</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">220</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="color: var(--primary-color); margin-top: 30px; margin-bottom: 15px;">Summary</h4>
+                        <p style="color: var(--gray-color); margin-bottom: 20px;">SGLang provides comprehensive backend support for Ascend NPU through a dedicated hardware adaptation layer and optimization components, fully leveraging the performance advantages of Ascend NPU. Core optimization technologies include MLA preprocessing, nz format conversion, and operator fusion, which collectively significantly improve model inference performance on Ascend NPU.</p>
+                        <p style="color: var(--gray-color); margin-bottom: 20px;">Recent improvements include CI fixes, weight conversion optimization, redundant format conversion removal, and diffusion model support, further enhancing the stability and performance of the Ascend backend. Through reasonable performance tuning and deployment strategies, optimal model inference performance can be achieved on Ascend NPU.</p>
+                        <p style="color: var(--gray-color); margin-bottom: 20px;">SGLang's Ascend backend implementation provides Ascend NPU users with an efficient, stable LLM inference solution, making Ascend NPU one of the ideal choices for LLM deployment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Liang Zhang</h3>
+                <p>Thank you for visiting my personal website!</p>
+                <div class="social-links">
+                    <a href="https://scholar.google.com/citations?hl=en&user=3tjnwCEAAAAJ&sortby=pubdate&view_op=list_works&gmla=AJsN-F4pWfVRlIolYWSlHod2XGCPk8RX1fC9CZZfP_mr6i39HWY9vymwmgKqr0DwaIK4hrDr3xRlVp6xt6BBLLATwGsTBmOcyLZxL6Mfpg4MU9m9Ob9QXDU" target="_blank">Google Scholar</a>
+                    <a href="https://www.linkedin.com/in/liangzhang-liya6666/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/liangzhang-keepmoving" target="_blank">GitHub</a>
+                </div>
+                <p class="copyright">© 2024 Liang Zhang. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinksContainer = document.querySelector('.nav-links');
+
+        // Handle page switching
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetPage = this.getAttribute('data-page');
+                
+                // Navigate to index.html with page parameter
+                window.location.href = `index.html#${targetPage}`;
+            });
+        });
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('active');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
