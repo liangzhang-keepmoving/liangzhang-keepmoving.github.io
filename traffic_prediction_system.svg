@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5f7fa"/>
+      <stop offset="100%" stop-color="#c3cfe2"/>
+    </linearGradient>
+    
+    <linearGradient id="modelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3498db"/>
+      <stop offset="100%" stop-color="#2980b9"/>
+    </linearGradient>
+    
+    <linearGradient id="dataGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2ecc71"/>
+      <stop offset="100%" stop-color="#27ae60"/>
+    </linearGradient>
+    
+    <linearGradient id="trafficGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e74c3c"/>
+      <stop offset="100%" stop-color="#c0392b"/>
+    </linearGradient>
+    
+    <!-- 滤镜定义 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 动画定义 -->
+    <path id="dataPath1" d="M100,350 C150,320 200,380 250,350" fill="none" stroke="none"/>
+    <path id="dataPath2" d="M250,350 C300,320 350,380 400,350" fill="none" stroke="none"/>
+    <path id="dataPath3" d="M400,350 C450,320 500,380 550,350" fill="none" stroke="none"/>
+    
+    <!-- 交通图标 -->
+    <g id="trafficIcon">
+      <rect x="-20" y="-15" width="40" height="30" rx="5" fill="#34495e"/>
+      <rect x="-15" y="-10" width="30" height="20" rx="3" fill="#e74c3c"/>
+      <circle cx="-8" cy="0" r="3" fill="white"/>
+      <circle cx="8" cy="0" r="3" fill="white"/>
+    </g>
+    
+    <!-- 数据图标 -->
+    <g id="dataIcon">
+      <rect x="-15" y="-15" width="30" height="30" rx="3" fill="#2ecc71"/>
+      <line x1="-10" y1="-10" x2="10" y2="10" stroke="white" stroke-width="2"/>
+      <line x1="10" y1="-10" x2="-10" y2="10" stroke="white" stroke-width="2"/>
+    </g>
+    
+    <!-- 模型图标 -->
+    <g id="modelIcon">
+      <rect x="-20" y="-20" width="40" height="40" rx="5" fill="#3498db"/>
+      <rect x="-15" y="-15" width="30" height="10" rx="2" fill="white"/>
+      <rect x="-15" y="0" width="30" height="10" rx="2" fill="white"/>
+    </g>
+    
+    <!-- 推荐图标 -->
+    <g id="recommendIcon">
+      <circle cx="0" cy="0" r="15" fill="#9b59b6"/>
+      <polygon points="0,-10 5,0 0,5 -5,0" fill="white"/>
+    </g>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="640" height="480" fill="url(#bgGradient)"/>
+  
+  <!-- 标题 -->
+  <text x="320" y="50" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    Traffic Prediction and Large Model Recommendation System
+  </text>
+  
+  <!-- 主框架 -->
+  <rect x="50" y="80" width="540" height="350" rx="10" fill="white" stroke="#bdc3c7" stroke-width="2"/>
+  
+  <!-- 左侧：交通流量分析 -->
+  <g transform="translate(150, 200)">
+    <!-- 交通图标 -->
+    <use xlink:href="#trafficIcon" transform="scale(1.5)"/>
+    <text x="0" y="50" font-family="Arial" font-size="14" text-anchor="middle" fill="#2c3e50">
+      Traffic Flow Analysis
+    </text>
+    
+    <!-- 交通流量可视化 -->
+    <g transform="translate(0, 80)">
+      <!-- 道路 -->
+      <rect x="-80" y="-10" width="160" height="20" rx="10" fill="#95a5a6"/>
+      
+      <!-- 车辆 -->
+      <rect x="-60" y="-8" width="15" height="8" rx="2" fill="#e74c3c">
+        <animate attributeName="x" from="-60" to="70" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="-30" y="-8" width="15" height="8" rx="2" fill="#3498db">
+        <animate attributeName="x" from="-30" to="100" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="0" y="-8" width="15" height="8" rx="2" fill="#f39c12">
+        <animate attributeName="x" from="0" to="130" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      
+      <!-- 流量曲线 -->
+      <path d="M-70,30 Q-40,10 -10,30 Q20,50 50,30 Q80,10 110,30" fill="none" stroke="#e74c3c" stroke-width="2"/>
+    </g>
+  </g>
+  
+  <!-- 中间：大型模型 -->
+  <g transform="translate(320, 200)">
+    <!-- 模型图标 -->
+    <use xlink:href="#modelIcon" transform="scale(1.5)" filter="url(#glow)"/>
+    <text x="0" y="50" font-family="Arial" font-size="14" text-anchor="middle" fill="#2c3e50">
+      Large Model
+    </text>
+    
+    <!-- 模型层 -->
+    <g transform="translate(0, 80)">
+      <rect x="-40" y="-40" width="80" height="20" rx="5" fill="#3498db" opacity="0.8"/>
+      <rect x="-35" y="-20" width="70" height="20" rx="5" fill="#3498db" opacity="0.6"/>
+      <rect x="-30" y="0" width="60" height="20" rx="5" fill="#3498db" opacity="0.4"/>
+      <rect x="-25" y="20" width="50" height="20" rx="5" fill="#3498db" opacity="0.2"/>
+    </g>
+  </g>
+  
+  <!-- 右侧：推荐系统 -->
+  <g transform="translate(490, 200)">
+    <!-- 推荐图标 -->
+    <use xlink:href="#recommendIcon" transform="scale(1.5)"/>
+    <text x="0" y="50" font-family="Arial" font-size="14" text-anchor="middle" fill="#2c3e50">
+      Recommendation System
+    </text>
+    
+    <!-- 推荐项目 -->
+    <g transform="translate(0, 80)">
+      <rect x="-40" y="-30" width="80" height="15" rx="3" fill="#9b59b6" opacity="0.8">
+        <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="-40" y="-10" width="80" height="15" rx="3" fill="#9b59b6" opacity="0.6">
+        <animate attributeName="opacity" values="0.4;0.6;0.4" dur="2.5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="-40" y="10" width="80" height="15" rx="3" fill="#9b59b6" opacity="0.4">
+        <animate attributeName="opacity" values="0.3;0.4;0.3" dur="3s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+  
+  <!-- 数据流动 -->
+  <g transform="translate(0, 350)">
+    <!-- 数据图标1 -->
+    <use xlink:href="#dataIcon" transform="translate(100, 0)">
+      <animateTransform attributeName="transform" type="rotate" from="0 100 0" to="360 100 0" dur="5s" repeatCount="indefinite"/>
+    </use>
+    
+    <!-- 数据图标2 -->
+    <use xlink:href="#dataIcon" transform="translate(250, 0)">
+      <animateTransform attributeName="transform" type="rotate" from="0 250 0" to="360 250 0" dur="5s" repeatCount="indefinite" begin="1s"/>
+    </use>
+    
+    <!-- 数据图标3 -->
+    <use xlink:href="#dataIcon" transform="translate(400, 0)">
+      <animateTransform attributeName="transform" type="rotate" from="0 400 0" to="360 400 0" dur="5s" repeatCount="indefinite" begin="2s"/>
+    </use>
+    
+    <!-- 数据图标4 -->
+    <use xlink:href="#dataIcon" transform="translate(550, 0)">
+      <animateTransform attributeName="transform" type="rotate" from="0 550 0" to="360 550 0" dur="5s" repeatCount="indefinite" begin="3s"/>
+    </use>
+    
+    <!-- 数据流动线 -->
+    <path d="M100,350 C150,320 200,380 250,350" fill="none" stroke="#2ecc71" stroke-width="2" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite"/>
+    </path>
+    <path d="M250,350 C300,320 350,380 400,350" fill="none" stroke="#2ecc71" stroke-width="2" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite" begin="0.3s"/>
+    </path>
+    <path d="M400,350 C450,320 500,380 550,350" fill="none" stroke="#2ecc71" stroke-width="2" stroke-dasharray="5,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite" begin="0.6s"/>
+    </path>
+  </g>
+  
+  <!-- 时间序列分析 -->
+  <g transform="translate(320, 380)">
+    <text x="0" y="-20" font-family="Arial" font-size="12" text-anchor="middle" fill="#2c3e50">
+      Time Series Analysis
+    </text>
+    <path d="M-100,0 Q-75,-20 -50,-5 Q-25,10 0,-15 Q25,0 50,-10 Q75,-20 100,-5" fill="none" stroke="#3498db" stroke-width="2"/>
+    <circle cx="-100" cy="0" r="3" fill="#3498db"/>
+    <circle cx="-50" cy="-5" r="3" fill="#3498db"/>
+    <circle cx="0" cy="-15" r="3" fill="#3498db"/>
+    <circle cx="50" cy="-10" r="3" fill="#3498db"/>
+    <circle cx="100" cy="-5" r="3" fill="#3498db"/>
+  </g>
+  
+  <!-- 技术标签 -->
+  <g transform="translate(320, 420)">
+    <rect x="-150" y="0" width="300" height="30" rx="15" fill="#ecf0f1"/>
+    <text x="0" y="20" font-family="Arial" font-size="12" text-anchor="middle" fill="#2c3e50">
+      Federated Learning • GNN • Spatiotemporal Analysis • LLM • Real-time Prediction
+    </text>
+  </g>
+</svg>
