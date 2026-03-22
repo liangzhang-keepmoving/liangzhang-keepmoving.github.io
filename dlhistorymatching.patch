@@ -1,0 +1,40 @@
+From d10dbde9ec5ef33a383b388b6ce6a2cbe661631d Mon Sep 17 00:00:00 2001
+From: Liang Zhang <13416661681@163.com>
+Date: Sat, 21 Mar 2026 23:59:14 +0800
+Subject: [PATCH] Add DLHistoryMatching project to Aramco internship and
+ projects section
+
+---
+ index.html | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/index.html b/index.html
+index fed37c0..ad38267 100644
+--- a/index.html
++++ b/index.html
+@@ -869,6 +869,7 @@
+                         <h4>Saudi Aramco</h4>
+                         <p class="date">June 2020 - August 2020</p>
+                         <p>• Agent design and development for reservoir history matching, model optimization and fine-tuning based on expert labels.</p>
++                        <p>• <strong>Project:</strong> <a href="https://github.com/liangzhang-keepmoving/DLHistoryMatching" target="_blank" style="color: var(--secondary-color); text-decoration: none;">DLHistoryMatching</a> - Deep learning-based reservoir history matching system</p>
+                     </div>
+                 </div>
+                 <div class="timeline-item left">
+@@ -1027,6 +1028,14 @@
+                         <a href="#" class="project-link">View Project</a>
+                     </div>
+                 </div>
++                <div class="project-card">
++                    <div class="project-image">🔍</div>
++                    <div class="project-content">
++                        <h3>DLHistoryMatching</h3>
++                        <p>Deep learning-based reservoir history matching system developed during Aramco internship. Implements agent design and development for reservoir history matching, with model optimization and fine-tuning based on expert labels.</p>
++                        <a href="https://github.com/liangzhang-keepmoving/DLHistoryMatching" target="_blank" class="project-link">View Project</a>
++                    </div>
++                </div>
+             </div>
+         </div>
+     </section>
+-- 
+2.43.7
+
