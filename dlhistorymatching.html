@@ -538,49 +538,103 @@
                     <p>By leveraging deep learning algorithms, the system can better capture complex reservoir behaviors and provide more accurate predictions, ultimately leading to better decision-making in oil and gas operations.</p>
                 </div>
                 <div class="overview-image" style="overflow-x: auto; padding: 10px;">
-                    <svg width="100%" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Background -->
-                        <rect width="800" height="450" fill="#f5f5f5"/>
-                        
-                        <!-- Title -->
-                        <text x="400" y="50" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#1a237e">Agent for History Matching Workflow</text>
-                        
-                        <!-- Data Input -->
-                        <rect x="100" y="100" width="150" height="80" rx="10" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
-                        <text x="175" y="145" font-family="Arial" font-size="14" text-anchor="middle" fill="#1a237e">Data Input</text>
-                        <text x="175" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Historical Production Data</text>
-                        <text x="175" y="180" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Reservoir Properties</text>
-                        
-                        <!-- Deep Learning Model -->
-                        <rect x="325" y="100" width="150" height="80" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
-                        <text x="400" y="145" font-family="Arial" font-size="14" text-anchor="middle" fill="#1a237e">Deep Learning Model</text>
-                        <text x="400" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Agent-based Optimization</text>
-                        <text x="400" y="180" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Model Fine-tuning</text>
-                        
-                        <!-- Reservoir Simulation -->
-                        <rect x="550" y="100" width="150" height="80" rx="10" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
-                        <text x="625" y="145" font-family="Arial" font-size="14" text-anchor="middle" fill="#1a237e">Reservoir Simulation</text>
-                        <text x="625" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Flow Simulation</text>
-                        <text x="625" y="180" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Prediction</text>
-                        
-                        <!-- Expert Feedback -->
-                        <rect x="325" y="250" width="150" height="80" rx="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
-                        <text x="400" y="295" font-family="Arial" font-size="14" text-anchor="middle" fill="#1a237e">Expert Feedback</text>
-                        <text x="400" y="315" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Labeling</text>
-                        <text x="400" y="330" font-family="Arial" font-size="12" text-anchor="middle" fill="#666">Validation</text>
-                        
-                        <!-- Arrows -->
-                        <path d="M250 140 L325 140" stroke="#1a237e" stroke-width="2" marker-end="url(#arrowhead)"/>
-                        <path d="M475 140 L550 140" stroke="#1a237e" stroke-width="2" marker-end="url(#arrowhead)"/>
-                        <path d="M625 180 L625 250 L400 250" stroke="#1a237e" stroke-width="2" marker-end="url(#arrowhead)"/>
-                        <path d="M400 330 L400 380 L250 380 L250 180" stroke="#1a237e" stroke-width="2" marker-end="url(#arrowhead)"/>
-                        
-                        <!-- Arrowhead Definition -->
+                    <svg width="100%" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Definitions -->
                         <defs>
-                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                                <polygon points="0 0, 10 3.5, 0 7" fill="#1a237e"/>
+                            <!-- Background gradient -->
+                            <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f8f9fa"/>
+                                <stop offset="100%" stop-color="#e9ecef"/>
+                            </linearGradient>
+                            
+                            <!-- Drop shadow effect -->
+                            <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                                <feOffset dx="2" dy="2" result="offsetblur"/>
+                                <feComponentTransfer>
+                                    <feFuncA type="linear" slope="0.3"/>
+                                </feComponentTransfer>
+                                <feMerge>
+                                    <feMergeNode/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                            
+                            <!-- Arrowhead definition -->
+                            <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+                                <polygon points="0 0, 12 4, 0 8" fill="#1a237e"/>
                             </marker>
                         </defs>
+                        
+                        <!-- Background -->
+                        <rect width="800" height="500" fill="url(#bgGradient)"/>
+                        
+                        <!-- Title with enhanced styling -->
+                        <text x="400" y="60" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#1a237e">
+                            Agent for History Matching Workflow
+                        </text>
+                        
+                        <!-- Data Input Node with enhanced styling -->
+                        <g filter="url(#dropShadow)">
+                            <rect x="80" y="120" width="180" height="100" rx="12" fill="#e3f2fd" stroke="#2196f3" stroke-width="2"/>
+                            <text x="170" y="170" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#1a237e">
+                                Data Input
+                            </text>
+                            <text x="170" y="195" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Historical Production Data
+                            </text>
+                            <text x="170" y="215" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Reservoir Properties
+                            </text>
+                        </g>
+                        
+                        <!-- Deep Learning Model Node with enhanced styling -->
+                        <g filter="url(#dropShadow)">
+                            <rect x="310" y="120" width="180" height="100" rx="12" fill="#e8f5e9" stroke="#4caf50" stroke-width="2"/>
+                            <text x="400" y="170" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#1a237e">
+                                Deep Learning Model
+                            </text>
+                            <text x="400" y="195" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Agent-based Optimization
+                            </text>
+                            <text x="400" y="215" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Model Fine-tuning
+                            </text>
+                        </g>
+                        
+                        <!-- Reservoir Simulation Node with enhanced styling -->
+                        <g filter="url(#dropShadow)">
+                            <rect x="540" y="120" width="180" height="100" rx="12" fill="#fff3e0" stroke="#ff9800" stroke-width="2"/>
+                            <text x="630" y="170" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#1a237e">
+                                Reservoir Simulation
+                            </text>
+                            <text x="630" y="195" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Flow Simulation
+                            </text>
+                            <text x="630" y="215" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Prediction
+                            </text>
+                        </g>
+                        
+                        <!-- Expert Feedback Node with enhanced styling -->
+                        <g filter="url(#dropShadow)">
+                            <rect x="310" y="280" width="180" height="100" rx="12" fill="#f3e5f5" stroke="#9c27b0" stroke-width="2"/>
+                            <text x="400" y="330" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#1a237e">
+                                Expert Feedback
+                            </text>
+                            <text x="400" y="355" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Labeling
+                            </text>
+                            <text x="400" y="375" font-family="'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" font-size="13" text-anchor="middle" fill="#424242">
+                                Validation
+                            </text>
+                        </g>
+                        
+                        <!-- Arrows with enhanced styling -->
+                        <path d="M260 170 L310 170" stroke="#1a237e" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+                        <path d="M490 170 L540 170" stroke="#1a237e" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+                        <path d="M630 220 L630 280 L490 280" stroke="#1a237e" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+                        <path d="M400 380 L400 430 L260 430 L260 220" stroke="#1a237e" stroke-width="2.5" marker-end="url(#arrowhead)"/>
                     </svg>
                 </div>
             </div>
