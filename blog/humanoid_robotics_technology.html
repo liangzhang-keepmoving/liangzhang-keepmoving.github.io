@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humanoid Robotics Technology - Liang Zhang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(102, 126, 234, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(102, 126, 234, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .tab-active {
+            border-bottom: 3px solid #667eea;
+            color: #667eea;
+        }
+        .progress-bar {
+            transition: width 1s ease-out;
+        }
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="bot" class="w-8 h-8 text-indigo-600"></i>
+                    <span class="text-xl font-bold gradient-text">Humanoid Tech</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#overview" class="text-gray-600 hover:text-indigo-600 transition" data-i18n="nav.overview">技术概览</a>
+                    <a href="#hardware" class="text-gray-600 hover:text-indigo-600 transition" data-i18n="nav.hardware">硬件架构</a>
+                    <a href="#software" class="text-gray-600 hover:text-indigo-600 transition" data-i18n="nav.software">软件算法</a>
+                    <a href="#companies" class="text-gray-600 hover:text-indigo-600 transition" data-i18n="nav.companies">企业对比</a>
+                    <a href="#trends" class="text-gray-600 hover:text-indigo-600 transition" data-i18n="nav.trends">发展趋势</a>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="langToggle" class="flex items-center space-x-1 px-3 py-1.5 rounded-full bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition text-sm font-medium">
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                        <span id="currentLang">中文</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 tech-grid">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    <span class="gradient-text" data-i18n="hero.title">人形机器人技术</span>
+                    <br>
+                    <span class="text-gray-800" data-i18n="hero.subtitle">深度解析</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto" data-i18n="hero.description">
+                    探索具身智能的核心技术，从硬件架构到AI大模型，全面了解人形机器人的技术栈与发展路径
+                </p>
+            </div>
+
+            <!-- Key Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-4xl font-bold text-indigo-600 mb-2">380亿</div>
+                    <div class="text-gray-600" data-i18n="stats.market">2035年市场规模（美元）</div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">140万</div>
+                    <div class="text-gray-600" data-i18n="stats.shipment">2035年预计出货量</div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-4xl font-bold text-pink-600 mb-2">3.99万</div>
+                    <div class="text-gray-600" data-i18n="stats.price">最低价格（人民币）</div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="text-4xl font-bold text-indigo-600 mb-2">55+</div>
+                    <div class="text-gray-600" data-i18n="stats.dof">最高自由度数量</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Overview -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-12" data-i18n="overview.title">技术架构概览</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Perception -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="eye" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="overview.perception">感知系统</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="overview.perception.desc">多模态传感器融合，实现环境感知与理解</p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="perception.rgb"></span>RGB摄像头（6+）</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="perception.lidar">激光雷达（LiDAR）</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="perception.depth">深度相机</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="perception.tactile">触觉传感器</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="perception.imu">IMU惯性测量</span></li>
+                    </ul>
+                </div>
+
+                <!-- Decision -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-purple-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="brain" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="overview.cognition">认知系统</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="overview.cognition.desc">AI大模型驱动的智能决策与任务规划</p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="cognition.vla"></span>VLA视觉语言模型</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="cognition.embodied">具身智能大模型</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="cognition.world">世界模型（World Model）</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="cognition.rl">强化学习（RL）</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="cognition.il">模仿学习（IL）</span></li>
+                    </ul>
+                </div>
+
+                <!-- Execution -->
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-2xl p-8 card-hover">
+                    <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="zap" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="overview.execution">执行系统</h3>
+                    <p class="text-gray-600 mb-4" data-i18n="overview.execution.desc">高精度运动控制与灵巧操作能力</p>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="execution.joints"></span>关节模组（40+自由度）</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="execution.hand">灵巧手（11-16自由度）</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="execution.force">力控技术</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="execution.balance">动态平衡算法</span></li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i><span data-i18n="execution.coordination">全身协调控制</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Architecture -->
+    <section id="hardware" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="hardware.title">硬件架构详解</h2>
+            <p class="text-center text-gray-600 mb-12" data-i18n="hardware.subtitle">人形机器人的"身体"构造与核心零部件</p>
+
+            <!-- Hardware Tabs -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="flex border-b">
+                    <button onclick="showTab('actuators')" id="tab-actuators" class="flex-1 py-4 px-6 text-center font-medium tab-active" data-i18n="hardware.actuators">执行器</button>
+                    <button onclick="showTab('sensors')" id="tab-sensors" class="flex-1 py-4 px-6 text-center font-medium text-gray-500" data-i18n="hardware.sensors">传感器</button>
+                    <button onclick="showTab('power')" id="tab-power" class="flex-1 py-4 px-6 text-center font-medium text-gray-500" data-i18n="hardware.power">动力系统</button>
+                    <button onclick="showTab('compute')" id="tab-compute" class="flex-1 py-4 px-6 text-center font-medium text-gray-500" data-i18n="hardware.compute">计算平台</button>
+                </div>
+
+                <div class="p-8">
+                    <!-- Actuators Tab -->
+                    <div id="content-actuators" class="tab-content">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4" data-i18n="hardware.joint_actuator">关节执行器</h3>
+                                <p class="text-gray-600 mb-6" data-i18n="hardware.joint_desc">人形机器人的核心运动部件，决定了机器人的灵活性、力量和精度。主流采用电机+减速器+驱动器的模块化设计。</p>
+                                
+                                <div class="space-y-4">
+                                    <div class="bg-gray-50 rounded-xl p-4">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium" data-i18n="hardware.peak_torque">峰值扭矩</span>
+                                            <span class="text-indigo-600 font-bold">400 N·m</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-indigo-600 h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">星动STAR1最高水平</p>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 rounded-xl p-4">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium" data-i18n="hardware.speed">转速</span>
+                                            <span class="text-purple-600 font-bold">25 rad/s</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-purple-600 h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">星动STAR1最高水平</p>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 rounded-xl p-4">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="font-medium" data-i18n="hardware.torque_density">扭矩密度</span>
+                                            <span class="text-pink-600 font-bold">50 N·m/kg</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-pink-600 h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">智元远征A2水平</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-2xl p-6">
+                                <h4 class="font-bold mb-4">关键技术指标对比</h4>
+                                <table class="w-full text-sm">
+                                    <thead>
+                                        <tr class="border-b-2 border-indigo-200">
+                                            <th class="text-left py-2">公司</th>
+                                            <th class="text-right py-2">峰值扭矩</th>
+                                            <th class="text-right py-2">自由度</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-2">星动STAR1</td>
+                                            <td class="text-right font-medium">400 N·m</td>
+                                            <td class="text-right">55</td>
+                                        </tr>
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-2">智元远征A2</td>
+                                            <td class="text-right font-medium">430 N·m</td>
+                                            <td class="text-right">50+</td>
+                                        </tr>
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-2">特斯拉Optimus</td>
+                                            <td class="text-right font-medium">-</td>
+                                            <td class="text-right">40+</td>
+                                        </tr>
+                                        <tr class="border-b border-gray-200">
+                                            <td class="py-2">Figure 02</td>
+                                            <td class="text-right font-medium">150 N·m</td>
+                                            <td class="text-right">16(手)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2">宇树H1</td>
+                                            <td class="text-right font-medium">-</td>
+                                            <td class="text-right">多关节</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sensors Tab -->
+                    <div id="content-sensors" class="tab-content hidden">
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-blue-50 rounded-xl p-6">
+                                <i data-lucide="camera" class="w-10 h-10 text-blue-600 mb-4"></i>
+                                <h4 class="font-bold mb-2">视觉传感器</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• RGB摄像头（6+个）</li>
+                                    <li>• 深度相机（RealSense）</li>
+                                    <li>• 全景视觉系统</li>
+                                    <li>• 3D视觉重建</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-xl p-6">
+                                <i data-lucide="scan" class="w-10 h-10 text-purple-600 mb-4"></i>
+                                <h4 class="font-bold mb-2">激光雷达</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 360°全向感知</li>
+                                    <li>• 高精度测距</li>
+                                    <li>• SLAM建图</li>
+                                    <li>• 障碍物检测</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-xl p-6">
+                                <i data-lucide="hand" class="w-10 h-10 text-green-600 mb-4"></i>
+                                <h4 class="font-bold mb-2">触觉传感器</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• 电子皮肤</li>
+                                    <li>• 力/力矩传感器</li>
+                                    <li>• 压力分布检测</li>
+                                    <li>• 滑觉检测</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Power Tab -->
+                    <div id="content-power" class="tab-content hidden">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold mb-4">电池系统</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between bg-gray-50 rounded-lg p-4">
+                                        <span>特斯拉Optimus</span>
+                                        <span class="font-bold text-indigo-600">2.3 kWh</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-gray-50 rounded-lg p-4">
+                                        <span>Figure 02</span>
+                                        <span class="font-bold text-purple-600">2.25 kWh</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-gray-50 rounded-lg p-4">
+                                        <span>众擎PM01</span>
+                                        <span class="font-bold text-green-600">固态电池 4-5h续航</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-4">热管理</h3>
+                                <p class="text-gray-600 mb-4">高性能关节执行器产生大量热量，需要有效的散热系统保证持续运行。</p>
+                                <div class="bg-yellow-50 rounded-xl p-4">
+                                    <h4 class="font-bold mb-2">智元热插拔换电技术</h4>
+                                    <p class="text-sm text-gray-600">支持连续运行，无需关机即可完成电池更换，实现百公里不间断行走。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compute Tab -->
+                    <div id="content-compute" class="tab-content hidden">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-xl font-bold mb-4">边缘计算平台</h3>
+                                <div class="space-y-4">
+                                    <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-xl p-4">
+                                        <h4 class="font-bold text-green-800">NVIDIA Jetson Thor</h4>
+                                        <p class="text-sm text-gray-600 mt-2">专为人形机器人设计的紧凑型计算机，基于Thor SoC，支持边缘AI推理。</p>
+                                    </div>
+                                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4">
+                                        <h4 class="font-bold text-blue-800">越疆Dobot Atom</h4>
+                                        <p class="text-sm text-gray-600 mt-2">端侧算力1500 TOPS，支持实时AI推理和运动控制。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-4">云端协同</h3>
+                                <p class="text-gray-600 mb-4">结合边缘计算和云端大模型，实现复杂任务的分布式处理。</p>
+                                <ul class="space-y-2">
+                                    <li class="flex items-center">
+                                        <i data-lucide="cloud" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                                        <span>云端大模型推理</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i data-lucide="server" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                                        <span>数据存储与分析</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i data-lucide="refresh-cw" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                                        <span>模型在线更新</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Software Algorithms -->
+    <section id="software" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="software.title">软件算法体系</h2>
+            <p class="text-center text-gray-600 mb-12" data-i18n="software.subtitle">AI大模型驱动的具身智能技术栈</p>
+
+            <!-- AI Model Stack -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-gradient-to-b from-indigo-500 to-indigo-600 rounded-2xl p-6 text-white">
+                    <h3 class="font-bold text-lg mb-3">感知层</h3>
+                    <ul class="text-sm space-y-2 opacity-90">
+                        <li>• 视觉编码器</li>
+                        <li>• 点云处理</li>
+                        <li>• 语义分割</li>
+                        <li>• 目标检测</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-b from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
+                    <h3 class="font-bold text-lg mb-3">认知层</h3>
+                    <ul class="text-sm space-y-2 opacity-90">
+                        <li>• VLM视觉语言模型</li>
+                        <li>• 世界模型</li>
+                        <li>• 任务规划</li>
+                        <li>• 常识推理</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-b from-pink-500 to-pink-600 rounded-2xl p-6 text-white">
+                    <h3 class="font-bold text-lg mb-3">决策层</h3>
+                    <ul class="text-sm space-y-2 opacity-90">
+                        <li>• VLA动作模型</li>
+                        <li>• 强化学习</li>
+                        <li>• 模仿学习</li>
+                        <li>• 轨迹规划</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-b from-green-500 to-green-600 rounded-2xl p-6 text-white">
+                    <h3 class="font-bold text-lg mb-3">控制层</h3>
+                    <ul class="text-sm space-y-2 opacity-90">
+                        <li>• 全身控制（WBC）</li>
+                        <li>• 模型预测控制（MPC）</li>
+                        <li>• 力控</li>
+                        <li>• 平衡控制</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Models -->
+            <h3 class="text-2xl font-bold mb-6" data-i18n="models.title">代表性大模型</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">NVIDIA GR00T N1</h4>
+                        <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm">开源</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">全球首个开源、可定制通用人形模型，采用双系统架构：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="zap" class="w-4 h-4 text-yellow-500 mr-2 mt-1"></i>
+                            <span><strong>系统1（快思考）</strong>：快速反应行动模型，类似人类直觉</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="brain" class="w-4 h-4 text-purple-500 mr-2 mt-1"></i>
+                            <span><strong>系统2（慢思考）</strong>：深度推理决策模型，基于VLM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">星动纪元 ERA-42</h4>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">原生AI</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">端到端原生机器人大模型，AI原生学习范式：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-indigo-500 mr-2 mt-1"></i>
+                            <span>摒弃传统人工编程，几乎零先验知识</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="trending-up" class="w-4 h-4 text-green-500 mr-2 mt-1"></i>
+                            <span>自我探索和自我学习实现自主进化</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">银河通用 GraspVLA</h4>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">端到端</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">端到端具身抓取基础大模型，支持：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="hand" class="w-4 h-4 text-orange-500 mr-2 mt-1"></i>
+                            <span>双臂灵巧操作</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="navigation" class="w-4 h-4 text-cyan-500 mr-2 mt-1"></i>
+                            <span>NavFoM跨本体导航</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">千寻智能 Spirit v1.5</h4>
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">开源</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">首个在性能上超越π0的中国开源具身模型：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="wand-2" class="w-4 h-4 text-pink-500 mr-2 mt-1"></i>
+                            <span>零样本泛化能力</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="video" class="w-4 h-4 text-red-500 mr-2 mt-1"></i>
+                            <span>基于互联网视频预训练</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">Tesla Bot Brain</h4>
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">自研</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">特斯拉自研的机器人控制大脑，基于FSD技术：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="cpu" class="w-4 h-4 text-blue-500 mr-2 mt-1"></i>
+                            <span>复用自动驾驶视觉感知技术</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="brain" class="w-4 h-4 text-purple-500 mr-2 mt-1"></i>
+                            <span>实时决策与运动规划</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">Figure OpenAI合作模型</h4>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">合作开发</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Figure与OpenAI合作开发的具身智能模型：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="hand" class="w-4 h-4 text-green-500 mr-2 mt-1"></i>
+                            <span>端到端操作技能学习</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="cog" class="w-4 h-4 text-orange-500 mr-2 mt-1"></i>
+                            <span>工业场景自适应能力</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-6 card-hover">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-lg">π0 具身智能模型</h4>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">Physical Intelligence</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">由Physical Intelligence（PI）公司开发的机器人基础模型：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-start">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-purple-500 mr-2 mt-1"></i>
+                            <span>视觉-语言-动作三模态融合</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="globe" class="w-4 h-4 text-green-500 mr-2 mt-1"></i>
+                            <span>通用机器人控制能力</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="users" class="w-4 h-4 text-indigo-500 mr-2 mt-1"></i>
+                            <span>与智元机器人等企业有合作</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Embodied Intelligence Simulation -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="simulation.title">具身智能仿真环境</h2>
+            <p class="text-center text-gray-600 mb-12" data-i18n="simulation.subtitle">加速机器人学习与开发的虚拟训练平台</p>
+
+            <!-- Simulation Platforms -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="cubes" class="w-8 h-8 text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">NVIDIA Isaac Sim</h3>
+                    <p class="text-gray-600 mb-4">专业级机器人仿真平台，支持物理精确模拟：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>GPU加速物理模拟</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>真实感渲染</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>ROS2集成</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>大规模场景支持</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="gamepad-2" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Unity ML-Agents</h3>
+                    <p class="text-gray-600 mb-4">游戏引擎基础的AI训练环境：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>丰富的环境资产</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>视觉真实感</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>强化学习集成</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>跨平台支持</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
+                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="code" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">PyBullet</h3>
+                    <p class="text-gray-600 mb-4">轻量级物理仿真引擎：</p>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Python友好API</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>快速原型开发</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>强化学习工具链</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>开源免费</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Simulation Benefits -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold mb-6" data-i18n="simulation.benefits">仿真环境的核心价值</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="zap" class="w-5 h-5 text-green-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">加速学习</h4>
+                                <p class="text-gray-600 text-sm">模拟环境中可以实现1000x+的时间加速，快速训练模型</p>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="shield" class="w-5 h-5 text-blue-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">安全测试</h4>
+                                <p class="text-gray-600 text-sm">在虚拟环境中测试危险操作，避免真实机器人损坏</p>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="globe" class="w-5 h-5 text-purple-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">场景多样性</h4>
+                                <p class="text-gray-600 text-sm">轻松创建各种复杂场景，增强模型泛化能力</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="dollar-sign" class="w-5 h-5 text-orange-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">降低成本</h4>
+                                <p class="text-gray-600 text-sm">减少真实硬件损耗，降低研发和测试成本</p>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="refresh-cw" class="w-5 h-5 text-red-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">持续迭代</h4>
+                                <p class="text-gray-600 text-sm">快速迭代算法和模型，加速研发周期</p>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                    <i data-lucide="layers" class="w-5 h-5 text-indigo-600"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">数字孪生</h4>
+                                <p class="text-gray-600 text-sm">创建真实机器人的数字孪生，实现精准模拟</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Simulation Usage -->
+            <h3 class="text-2xl font-bold mt-12 mb-6" data-i18n="simulation.usage">企业仿真环境应用</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+                            <th class="py-4 px-6 text-left" data-i18n="table.company">公司</th>
+                            <th class="py-4 px-6 text-center" data-i18n="table.platform">使用的仿真平台</th>
+                            <th class="py-4 px-6 text-center" data-i18n="table.scenario">应用场景</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">Tesla</td>
+                            <td class="py-4 px-6 text-center">自研仿真系统</td>
+                            <td class="py-4 px-6 text-center">运动控制、环境交互</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">Figure AI</td>
+                            <td class="py-4 px-6 text-center">Isaac Sim + 自研</td>
+                            <td class="py-4 px-6 text-center">操作技能训练</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">星动纪元</td>
+                            <td class="py-4 px-6 text-center">自研仿真系统</td>
+                            <td class="py-4 px-6 text-center">运动性能优化</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">银河通用</td>
+                            <td class="py-4 px-6 text-center">PyBullet + Isaac Sim</td>
+                            <td class="py-4 px-6 text-center">导航与抓取训练</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">宇树科技</td>
+                            <td class="py-4 px-6 text-center">PyBullet</td>
+                            <td class="py-4 px-6 text-center">运动控制算法</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">波士顿动力</td>
+                            <td class="py-4 px-6 text-center">自研仿真系统</td>
+                            <td class="py-4 px-6 text-center">基于自研模型的运动技能训练</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">亚马逊机器人</td>
+                            <td class="py-4 px-6 text-center">Isaac Sim</td>
+                            <td class="py-4 px-6 text-center">基于AWS模型的仓储操作训练</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="py-4 px-6 font-medium">魔法原子</td>
+                            <td class="py-4 px-6 text-center">PyBullet</td>
+                            <td class="py-4 px-6 text-center">基于自研+开源模型的灵巧操作训练</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Comparison -->
+    <section id="companies" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="companies.title">企业技术对比</h2>
+            <p class="text-center text-gray-600 mb-12" data-i18n="companies.subtitle">国内外领先企业技术路线与特色</p>
+
+            <!-- Company Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Tesla -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.1s;">
+                    <div class="h-2 bg-red-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">Tesla Optimus</h3>
+                            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">海外</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">核心优势</span>
+                                <span class="font-medium">FSD技术复用</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">自由度</span>
+                                <span class="font-medium">40+</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">目标价格</span>
+                                <span class="font-medium text-green-600">$20,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">使用模型</span>
+                                <span class="font-medium">Tesla Bot Brain</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">依托特斯拉自动驾驶技术积累和强大制造能力，使用自研Bot Brain模型</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Figure AI -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.2s;">
+                    <div class="h-2 bg-purple-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">Figure 02</h3>
+                            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">海外</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">核心优势</span>
+                                <span class="font-medium">端到端AI</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">手部自由度</span>
+                                <span class="font-medium">16</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">AI提升</span>
+                                <span class="font-medium text-purple-600">200%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">使用模型</span>
+                                <span class="font-medium">OpenAI合作模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">与OpenAI合作，专注工业制造场景，使用OpenAI的具身智能模型</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 宇树 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.3s;">
+                    <div class="h-2 bg-blue-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">宇树科技</h3>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">国内</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">核心优势</span>
+                                <span class="font-medium">成本控制</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">出货量</span>
+                                <span class="font-medium">全球第一</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">价格区间</span>
+                                <span class="font-medium text-green-600">3.99-65万</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">使用模型</span>
+                                <span class="font-medium">自研运动控制模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">全球出货量最大，成本控制优秀，IPO在即，使用自研运动控制模型</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 智元 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.4s;">
+                    <div class="h-2 bg-indigo-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">智元机器人</h3>
+                            <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">国内</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">核心优势</span>
+                                <span class="font-medium">认证领先</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">自由度</span>
+                                <span class="font-medium">50+</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">续航</span>
+                                <span class="font-medium text-green-600">热插拔换电</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">使用模型</span>
+                                <span class="font-medium">自研+π0模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">全球首个中美欧多国认证，吉尼斯纪录保持者，与Physical Intelligence有合作</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 银河通用 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.5s;">
+                    <div class="h-2 bg-cyan-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">银河通用</h3>
+                            <span class="text-xs bg-cyan-100 text-cyan-700 px-2 py-1 rounded" data-i18n="company.domestic">国内</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.advantage">核心优势</span>
+                                <span class="font-medium" data-i18n="company.galaxy.adv">大模型</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.form">形态</span>
+                                <span class="font-medium">轮式+双臂</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.valuation">估值</span>
+                                <span class="font-medium text-purple-600">30亿美元</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.model">使用模型</span>
+                                <span class="font-medium">GraspVLA/NavFoM</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">具身大模型领航者，NavFoM导航基座模型，GraspVLA抓取模型</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 星动纪元 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.6s;">
+                    <div class="h-2 bg-orange-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">星动纪元</h3>
+                            <span class="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded" data-i18n="company.domestic">国内</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.advantage">核心优势</span>
+                                <span class="font-medium" data-i18n="company.stardust.adv">运动性能</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.speed">奔跑速度</span>
+                                <span class="font-medium text-orange-600">3.6m/s</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.dof">自由度</span>
+                                <span class="font-medium">55</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.model">使用模型</span>
+                                <span class="font-medium">ERA-42原生AI模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">全球跑得最快最稳，原生AI学习范式，ERA-42端到端原生机器人大模型</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 波士顿动力 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.7s;">
+                    <div class="h-2 bg-green-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">波士顿动力</h3>
+                            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded" data-i18n="company.overseas">海外</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.advantage">核心优势</span>
+                                <span class="font-medium" data-i18n="company.bd.adv">运动控制</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.product">代表产品</span>
+                                <span class="font-medium">Atlas/Spot</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.feature">特色</span>
+                                <span class="font-medium" data-i18n="company.bd.feature">杂技表演</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.model">使用模型</span>
+                                <span class="font-medium" data-i18n="company.self_model">自研模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">全球领先的机器人公司，以卓越的运动控制能力著称</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 亚马逊机器人 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.8s;">
+                    <div class="h-2 bg-yellow-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">亚马逊机器人</h3>
+                            <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded" data-i18n="company.overseas">海外</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.advantage">核心优势</span>
+                                <span class="font-medium" data-i18n="company.amazon.adv">仓储自动化</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.product">代表产品</span>
+                                <span class="font-medium">Proteus</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.scenario">应用场景</span>
+                                <span class="font-medium" data-i18n="company.amazon.scenario">物流仓储</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600" data-i18n="company.model">使用模型</span>
+                                <span class="font-medium">AWS相关模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">电商巨头亚马逊的机器人部门，专注于仓储自动化解决方案</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 魔法原子 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover animate-fade-in" style="animation-delay: 0.9s;">
+                    <div class="h-2 bg-purple-500"></div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg">魔法原子</h3>
+                            <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">国内</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">核心优势</span>
+                                <span class="font-medium">灵巧操作</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">代表产品</span>
+                                <span class="font-medium">Magic Hand</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">特色</span>
+                                <span class="font-medium">精密抓取</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">使用模型</span>
+                                <span class="font-medium">自研+开源模型</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">专注于灵巧操作的机器人公司，在精密抓取领域有独特优势</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Comparison Table -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="comparison-table text-white">
+                                <th class="py-4 px-6 text-left" data-i18n="table.company">公司</th>
+                                <th class="py-4 px-6 text-center" data-i18n="table.product">产品</th>
+                                <th class="py-4 px-6 text-center" data-i18n="table.type">形态</th>
+                                <th class="py-4 px-6 text-center" data-i18n="table.dof">自由度</th>
+                                <th class="py-4 px-6 text-center" data-i18n="table.price">价格</th>
+                                <th class="py-4 px-6 text-center" data-i18n="table.feature">技术特色</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">Tesla</td>
+                                <td class="py-4 px-6 text-center">Optimus Gen2</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">40+</td>
+                                <td class="py-4 px-6 text-center text-green-600">$20K目标</td>
+                                <td class="py-4 px-6 text-center">FSD复用</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">Figure AI</td>
+                                <td class="py-4 px-6 text-center">Figure 02</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">16(手)</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">端到端AI</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">宇树科技</td>
+                                <td class="py-4 px-6 text-center">H1/G1/R1</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">23-43</td>
+                                <td class="py-4 px-6 text-center text-green-600">3.99-65万</td>
+                                <td class="py-4 px-6 text-center">成本控制</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">智元机器人</td>
+                                <td class="py-4 px-6 text-center">远征A2</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">50+</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">热插拔换电</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">银河通用</td>
+                                <td class="py-4 px-6 text-center">Galbot G1</td>
+                                <td class="py-4 px-6 text-center">轮式+双臂</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">具身大模型</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">星动纪元</td>
+                                <td class="py-4 px-6 text-center">STAR1</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">55</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">原生AI</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">众擎机器人</td>
+                                <td class="py-4 px-6 text-center">PM01</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">24</td>
+                                <td class="py-4 px-6 text-center text-green-600">8.8万</td>
+                                <td class="py-4 px-6 text-center">低成本</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">星尘智能</td>
+                                <td class="py-4 px-6 text-center">S1</td>
+                                <td class="py-4 px-6 text-center">模块化</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">绳驱传动</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">波士顿动力</td>
+                                <td class="py-4 px-6 text-center">Atlas</td>
+                                <td class="py-4 px-6 text-center">双足</td>
+                                <td class="py-4 px-6 text-center">28</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">运动控制</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">亚马逊机器人</td>
+                                <td class="py-4 px-6 text-center">Proteus</td>
+                                <td class="py-4 px-6 text-center">轮式</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">仓储自动化</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-4 px-6 font-medium">魔法原子</td>
+                                <td class="py-4 px-6 text-center">Magic Hand</td>
+                                <td class="py-4 px-6 text-center">灵巧手</td>
+                                <td class="py-4 px-6 text-center">16</td>
+                                <td class="py-4 px-6 text-center">-</td>
+                                <td class="py-4 px-6 text-center">精密抓取</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Trends -->
+    <section id="trends" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center mb-4" data-i18n="trends.title">技术发展趋势</h2>
+            <p class="text-center text-gray-600 mb-12" data-i18n="trends.subtitle">人形机器人技术的未来方向</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Trend 1 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="brain-circuit" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.embodied_models">具身智能大模型</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.embodied_models.desc">从专用模型向通用模型演进，实现跨任务、跨场景的泛化能力。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.vla">VLA模型</span>
+                            <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.world">世界模型</span>
+                            <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.end2end">端到端学习</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend 2 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="layers" class="w-6 h-6 text-purple-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.multimodal">多模态融合</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.multimodal.desc">视觉、语音、触觉深度融合，实现更自然的人机交互。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.vision_lang">视觉语言</span>
+                            <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.tactile">触觉反馈</span>
+                            <span class="bg-purple-50 text-purple-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.voice">语音交互</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend 3 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="monitor-play" class="w-6 h-6 text-green-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.sim2real">Sim2Real迁移</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.sim2real.desc">基于仿真环境训练，实现零样本或少样本的真实世界部署。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.synthetic">合成数据</span>
+                            <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.domain_rand">域随机化</span>
+                            <span class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.digital_twin">数字孪生</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend 4 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="trending-down" class="w-6 h-6 text-pink-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.low_cost">低成本化</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.low_cost.desc">核心零部件国产化，规模化生产推动成本快速下降。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-pink-50 text-pink-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.localization">国产替代</span>
+                            <span class="bg-pink-50 text-pink-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.scale">规模效应</span>
+                            <span class="bg-pink-50 text-pink-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.modular">模块化设计</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend 5 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="puzzle" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.modular_design">模块化设计</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.modular_design.desc">标准化接口和模块化架构，便于维护、升级和场景定制。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.standard">标准接口</span>
+                            <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.plug_play">即插即用</span>
+                            <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.rapid_deploy">快速部署</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend 6 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="database" class="w-6 h-6 text-orange-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.data_loop">数据闭环</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.data_loop.desc">真实场景数据收集，持续优化模型性能，形成飞轮效应。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.data_collection">数据采集</span>
+                            <span class="bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.model_iter">模型迭代</span>
+                            <span class="bg-orange-50 text-orange-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.cont_learning">持续学习</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trend 7 -->
+                <div class="flex space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center">
+                            <i data-lucide="monitor-play" class="w-6 h-6 text-teal-600"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg mb-2" data-i18n="trends.sim2real_transfer">仿真到现实迁移</h3>
+                        <p class="text-gray-600 mb-3" data-i18n="trends.sim2real_transfer.desc">基于仿真环境的大规模预训练，实现零样本或少样本的真实世界部署。</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-xs">Sim2Real</span>
+                            <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.domain_rand">域随机化</span>
+                            <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-xs" data-i18n="trends.tag.digital_twin">数字孪生</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Summary -->
+    <section class="py-20 gradient-bg text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-8" data-i18n="techstack.title">技术栈总结</h2>
+            <div class="grid md:grid-cols-5 gap-4">
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <i data-lucide="cpu" class="w-8 h-8 mx-auto mb-2"></i>
+                    <div class="font-medium" data-i18n="techstack.perception">感知</div>
+                    <div class="text-sm opacity-75" data-i18n="techstack.perception.sub">视觉/激光雷达/触觉</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <i data-lucide="network" class="w-8 h-8 mx-auto mb-2"></i>
+                    <div class="font-medium" data-i18n="techstack.cognition">认知</div>
+                    <div class="text-sm opacity-75" data-i18n="techstack.cognition.sub">VLM/世界模型</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <i data-lucide="git-branch" class="w-8 h-8 mx-auto mb-2"></i>
+                    <div class="font-medium" data-i18n="techstack.decision">决策</div>
+                    <div class="text-sm opacity-75" data-i18n="techstack.decision.sub">VLA/强化学习</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <i data-lucide="activity" class="w-8 h-8 mx-auto mb-2"></i>
+                    <div class="font-medium" data-i18n="techstack.control">控制</div>
+                    <div class="text-sm opacity-75" data-i18n="techstack.control.sub">MPC/WBC/力控</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+                    <i data-lucide="cog" class="w-8 h-8 mx-auto mb-2"></i>
+                    <div class="font-medium" data-i18n="techstack.execution">执行</div>
+                    <div class="text-sm opacity-75" data-i18n="techstack.execution.sub">关节模组/灵巧手</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <i data-lucide="bot" class="w-6 h-6 text-indigo-500"></i>
+                    <span class="text-white font-bold">Humanoid Tech</span>
+                </div>
+                <div class="text-sm" data-i18n="footer.date">
+                    报告日期：2026年3月26日 | 基于公开信息整理
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-sm text-center">
+                <p data-i18n="footer.disclaimer">本报告仅供参考，不构成投资建议。数据来源于公司官网、新闻报道及行业研究。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show selected content
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            
+            // Update tab styles
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('tab-active');
+                tab.classList.add('text-gray-500');
+            });
+            
+            document.getElementById('tab-' + tabName).classList.add('tab-active');
+            document.getElementById('tab-' + tabName).classList.remove('text-gray-500');
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate progress bars on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.getAttribute('data-width') || entry.target.style.width;
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.progress-bar').forEach(bar => {
+            observer.observe(bar);
+        });
+
+        // Language Switching Functionality
+        const translations = {
+            zh: {
+                'nav.overview': '技术概览',
+                'nav.hardware': '硬件架构',
+                'nav.software': '软件算法',
+                'nav.companies': '企业对比',
+                'nav.trends': '发展趋势',
+                'lang.name': '中文',
+                'hero.title': '人形机器人技术',
+                'hero.subtitle': '深度解析',
+                'hero.description': '探索具身智能的核心技术，从硬件架构到AI大模型，全面了解人形机器人的技术栈与发展路径',
+                'stats.market': '2035年市场规模（美元）',
+                'stats.shipment': '2035年预计出货量',
+                'stats.price': '最低价格（人民币）',
+                'stats.dof': '最高自由度数量',
+                'overview.title': '技术架构概览',
+                'overview.perception': '感知系统',
+                'overview.perception.desc': '多模态传感器融合，实现环境感知与理解',
+                'overview.cognition': '认知系统',
+                'overview.cognition.desc': 'AI大模型驱动的智能决策与任务规划',
+                'overview.execution': '执行系统',
+                'overview.execution.desc': '高精度运动控制与灵巧操作能力',
+                'hardware.title': '硬件架构详解',
+                'hardware.subtitle': '人形机器人的"身体"构造与核心零部件',
+                'software.title': '软件算法体系',
+                'software.subtitle': 'AI大模型驱动的具身智能技术栈',
+                'simulation.title': '具身智能仿真环境',
+                'simulation.subtitle': '加速机器人学习与开发的虚拟训练平台',
+                'companies.title': '企业技术对比',
+                'companies.subtitle': '国内外领先企业技术路线与特色',
+                'trends.title': '技术发展趋势',
+                'trends.subtitle': '人形机器人技术的未来方向',
+                'footer.date': '报告日期：2026年3月26日 | 基于公开信息整理',
+                'footer.disclaimer': '本报告仅供参考，不构成投资建议。数据来源于公司官网、新闻报道及行业研究。'
+            },
+            en: {
+                'nav.overview': 'Overview',
+                'nav.hardware': 'Hardware',
+                'nav.software': 'Software',
+                'nav.companies': 'Companies',
+                'nav.trends': 'Trends',
+                'lang.name': 'English',
+                'hero.title': 'Humanoid Robotics',
+                'hero.subtitle': 'Deep Dive',
+                'hero.description': 'Explore embodied intelligence core technologies, from hardware architecture to AI large models, and comprehensively understand the technology stack and development path of humanoid robots',
+                'stats.market': '2035 Market Size (USD)',
+                'stats.shipment': '2035 Expected Shipment',
+                'stats.price': 'Minimum Price (RMB)',
+                'stats.dof': 'Max Degrees of Freedom',
+                'overview.title': 'Technology Architecture',
+                'overview.perception': 'Perception System',
+                'overview.perception.desc': 'Multi-modal sensor fusion for environmental perception and understanding',
+                'overview.cognition': 'Cognition System',
+                'overview.cognition.desc': 'AI large model-driven intelligent decision-making and task planning',
+                'overview.execution': 'Execution System',
+                'overview.execution.desc': 'High-precision motion control and dexterous manipulation capabilities',
+                'hardware.title': 'Hardware Architecture',
+                'hardware.subtitle': 'The "body" structure and core components of humanoid robots',
+                'software.title': 'Software Algorithm Stack',
+                'software.subtitle': 'Embodied intelligence technology stack powered by AI large models',
+                'simulation.title': 'Embodied Intelligence Simulation',
+                'simulation.subtitle': 'Virtual training platforms to accelerate robot learning and development',
+                'companies.title': 'Company Technology Comparison',
+                'companies.subtitle': 'Technical routes and characteristics of leading domestic and international enterprises',
+                'trends.title': 'Technology Development Trends',
+                'trends.subtitle': 'Future directions of humanoid robotics technology',
+                'footer.date': 'Report Date: March 26, 2026 | Based on publicly available information',
+                'footer.disclaimer': 'This report is for reference only and does not constitute investment advice. Data sourced from company websites, news reports, and industry research.',
+                'perception.rgb': 'RGB Cameras (6+)',
+                'perception.lidar': 'LiDAR',
+                'perception.depth': 'Depth Cameras',
+                'perception.tactile': 'Tactile Sensors',
+                'perception.imu': 'IMU Inertial Measurement',
+                'cognition.vla': 'VLA Vision-Language Model',
+                'cognition.embodied': 'Embodied Intelligence Large Model',
+                'cognition.world': 'World Model',
+                'cognition.rl': 'Reinforcement Learning (RL)',
+                'cognition.il': 'Imitation Learning (IL)',
+                'execution.joints': 'Joint Modules (40+ DOF)',
+                'execution.hand': 'Dexterous Hand (11-16 DOF)',
+                'execution.force': 'Force Control',
+                'execution.balance': 'Dynamic Balance',
+                'execution.coordination': 'Whole-body Control',
+                'hardware.actuators': 'Actuators',
+                'hardware.sensors': 'Sensors',
+                'hardware.power': 'Power System',
+                'hardware.compute': 'Compute Platform',
+                'models.title': 'Representative Large Models',
+                'simulation.platforms': 'Simulation Platforms',
+                'simulation.benefits': 'Core Value of Simulation',
+                'simulation.usage': 'Enterprise Simulation Usage',
+                'comparison.table': 'Detailed Comparison Table',
+                'techstack.title': 'Tech Stack Summary',
+                'techstack.perception': 'Perception',
+                'techstack.perception.sub': 'Vision/LiDAR/Tactile',
+                'techstack.cognition': 'Cognition',
+                'techstack.cognition.sub': 'VLM/World Model',
+                'techstack.decision': 'Decision',
+                'techstack.decision.sub': 'VLA/RL',
+                'techstack.control': 'Control',
+                'techstack.control.sub': 'MPC/WBC/Force',
+                'techstack.execution': 'Execution',
+                'techstack.execution.sub': 'Joints/Hand',
+                'hardware.joint_actuator': 'Joint Actuators',
+                'hardware.joint_desc': 'Core motion components of humanoid robots, determining flexibility, strength, and precision. Mainstream design uses modular motor+reducer+driver configuration.',
+                'hardware.peak_torque': 'Peak Torque',
+                'hardware.speed': 'Speed',
+                'hardware.torque_density': 'Torque Density',
+                'table.company': 'Company',
+                'table.product': 'Product',
+                'table.type': 'Type',
+                'table.dof': 'DOF',
+                'table.price': 'Price',
+                'table.feature': 'Feature',
+                'table.platform': 'Simulation Platform',
+                'table.scenario': 'Application Scenario',
+                'trends.embodied_models': 'Embodied Intelligence Large Models',
+                'trends.embodied_models.desc': 'Evolution from specialized models to general-purpose models, achieving cross-task and cross-scenario generalization capabilities.',
+                'trends.multimodal': 'Multimodal Fusion',
+                'trends.multimodal.desc': 'Deep integration of vision, voice, and touch for more natural human-robot interaction.',
+                'trends.sim2real': 'Sim2Real Transfer',
+                'trends.sim2real.desc': 'Training in simulation environments to achieve zero-shot or few-shot real-world deployment.',
+                'trends.low_cost': 'Cost Reduction',
+                'trends.low_cost.desc': 'Localization of core components and mass production driving rapid cost decline.',
+                'trends.modular_design': 'Modular Design',
+                'trends.modular_design.desc': 'Standardized interfaces and modular architecture for easy maintenance, upgrades, and scenario customization.',
+                'trends.data_loop': 'Data Closed Loop',
+                'trends.data_loop.desc': 'Real-world data collection to continuously optimize model performance, forming a flywheel effect.',
+                'trends.sim2real_transfer': 'Simulation to Reality Transfer',
+                'trends.sim2real_transfer.desc': 'Large-scale pre-training in simulation environments to achieve zero-shot or few-shot real-world deployment.',
+                'trends.tag.vla': 'VLA Models',
+                'trends.tag.world': 'World Models',
+                'trends.tag.end2end': 'End-to-End Learning',
+                'trends.tag.vision_lang': 'Vision-Language',
+                'trends.tag.tactile': 'Tactile Feedback',
+                'trends.tag.voice': 'Voice Interaction',
+                'trends.tag.synthetic': 'Synthetic Data',
+                'trends.tag.domain_rand': 'Domain Randomization',
+                'trends.tag.digital_twin': 'Digital Twin',
+                'trends.tag.localization': 'Localization',
+                'trends.tag.scale': 'Scale Effect',
+                'trends.tag.modular': 'Modular Design',
+                'trends.tag.standard': 'Standard Interface',
+                'trends.tag.plug_play': 'Plug & Play',
+                'trends.tag.rapid_deploy': 'Rapid Deployment',
+                'trends.tag.data_collection': 'Data Collection',
+                'trends.tag.model_iter': 'Model Iteration',
+                'trends.tag.cont_learning': 'Continuous Learning',
+                'company.domestic': 'Domestic',
+                'company.overseas': 'Overseas',
+                'company.advantage': 'Core Advantage',
+                'company.form': 'Form Factor',
+                'company.valuation': 'Valuation',
+                'company.model': 'Model Used',
+                'company.speed': 'Running Speed',
+                'company.dof': 'DOF',
+                'company.product': 'Product',
+                'company.feature': 'Feature',
+                'company.scenario': 'Scenario',
+                'company.self_model': 'Self-developed',
+                'company.galaxy.adv': 'Large Models',
+                'company.stardust.adv': 'Motion Performance',
+                'company.bd.adv': 'Motion Control',
+                'company.bd.feature': 'Acrobatics',
+                'company.amazon.adv': 'Warehouse Automation',
+                'company.amazon.scenario': 'Logistics & Warehouse'
+            }
+        };
+
+        let currentLang = 'zh';
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('currentLang').textContent = translations[lang]['lang.name'];
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update HTML lang attribute
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        }
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            const newLang = currentLang === 'zh' ? 'en' : 'zh';
+            updateLanguage(newLang);
+        });
+
+        // Initialize language
+        updateLanguage('zh');
+    </script>
+</body>
+</html>
